@@ -10,6 +10,7 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="#">Admin Panel</a>
+        <a href="{{ route('admin.users') }}" class="mb-3">Users</a>
         <a class="btn btn-light" href="{{ route('home') }}">На главную</a>
     </div>
 </nav>
