@@ -40,6 +40,17 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/admin/user/{id}', [AdminController::class, 'destroy'])->name('admin.user.delete');
         Route::get('/admin/user/create', [AdminController::class, 'create'])->name('admin.user.create');
         Route::post('/admin/user', [AdminController::class, 'store'])->name('admin.user.store');
+
+        Route::get('/admin/courses', [CourseController::class, 'adminindex'])->name('admin.admincourses');
+        Route::get('/admin/courses/{id}/edit', [CourseController::class, 'edit'])->name('admin.courses.edit');
+        Route::put('/admin/courses/{id}', [CourseController::class, 'update'])->name('admin.courses.update');
+        Route::delete('/admin/courses/{id}', [CourseController::class, 'destroy'])->name('admin.courses.destroy');
+        Route::get('/admin/courses/create', [CourseController::class, 'create'])->name('admin.courses.create');
+        Route::post('/admin/courses', [CourseController::class, 'store'])->name('admin.courses.store');
+        Route::get('/admin/courses/{id}', [CourseController::class, 'show'])->name('admin.courses.show');
+
+        Route::get('/admin/lessons', [AdminController::class, 'indexlesson'])->name('admin.adminlessons');
+        Route::delete('/admin/lessons/{id}', [AdminController::class, 'destroylesson'])->name('admin.lessons.destroy');
     });
 
 

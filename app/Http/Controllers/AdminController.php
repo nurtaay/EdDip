@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\Lesson;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -74,6 +76,30 @@ class AdminController extends Controller
         $user->delete();
 
         return redirect()->route('admin.users')->with('success', 'Пользователь удалён!');
+    }
+
+    /**
+     * Display a listing of the lessons.
+     */
+    public function indexlesson()
+    {
+        // Eager load the course relationship for each lesson.
+        $lessons = Lesson::with('course')->get();
+
+        return view('admin.lessons.index', compact('lessons'));
+    }
+
+    /**
+     * Remove the specified lesson from storage.
+     */
+
+    public function destroylesson($id)
+    {
+        $course = Lesson::findOrFail($id);
+        $course->delete();
+
+        return redirect()->route('admin.adminlessons')
+            ->with('success', 'Lesson deleted successfully.');
     }
 }
 

@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $course->title }}</h5>
                         <p class="card-text">{{ $course->description }}</p>
-                        <a href="{{ route('courses.show', $course->id) }}" class="btn btn-primary">Подробнее</a>
+                        <a href="{{ route('teacher.courses.show', $course->id) }}" class="btn btn-primary">Подробнее</a>
                         <a href="{{ route('teacher.lesson.create', $course->id) }}" class="btn btn-primary">Добавить урок</a>
                     </div>
                 </div>

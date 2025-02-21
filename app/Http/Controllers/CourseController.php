@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
+    // Display a listing of the courses.
+    public function adminindex()
+    {
+        // Eager load the user relationship for performance.
+        $courses = Course::with('user')->get();
+
+        return view('admin.courses.index', compact('courses'));
+    }
+
     // Список курсов
     public function index()
     {
@@ -20,4 +29,14 @@ class CourseController extends Controller
         $course = Course::with('lessons')->findOrFail($id);
         return view('teacher.courses.show', compact('course'));
     }
+
+    public function destroy($id)
+    {
+        $course = Course::findOrFail($id);
+        $course->delete();
+
+        return redirect()->route('admin.admincourses')
+            ->with('success', 'Course deleted successfully.');
+    }
+
 }
