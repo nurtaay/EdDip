@@ -31,7 +31,7 @@
                         <td>{{ $lesson->course->title ?? 'N/A' }}</td>
                         <td>
                             @if($lesson->video)
-                                <a href="{{ $lesson->video }}" target="_blank">Watch Video</a>
+                                <a href="{{ asset('storage/' . $lesson->video) }}" target="_blank">Watch Video</a>
                             @else
                                 N/A
                             @endif
