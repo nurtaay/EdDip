@@ -10,7 +10,9 @@
     <ul class="list-group">
         @foreach($course->lessons as $lesson)
             <li class="list-group-item">
-                <h5>{{ $lesson->title }}</h5>
+                <a href="{{ route('lessons.show', $lesson->id) }}">
+                    <h5>{{ $lesson->title }}</h5>
+                </a>
                 <p>{{ $lesson->content }}</p>
                 @if ($lesson->video)
                     <video width="100%" controls>

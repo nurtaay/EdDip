@@ -39,4 +39,13 @@ class CourseController extends Controller
             ->with('success', 'Course deleted successfully.');
     }
 
+
+    public function indexstud()
+    {
+        // Получаем все курсы вместе с уроками
+        $courses = Course::with('lessons')->get();
+
+        return view('student.courses.index', compact('courses'));
+    }
+
 }

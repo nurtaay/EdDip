@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AssignmentController;
+use App\Http\Controllers\AssignmentSubmissionController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\TeacherController;
 
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +33,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/courses', [CourseController::class, 'index'])->name('teacher.courses.index');
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('teacher.courses.show');
+    Route::get('/stud', [CourseController::class, 'indexstud'])->name('student.courses.index');
+    // Преподаватель создает задание для урока
+    Route::post('/lessons/{lesson}/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
+    Route::get('/lessons/{lesson}', [LessonController::class, 'show'])->name('lessons.show');
+    // Студент отправляет выполнение задания
+    Route::post('/assignments/{assignment}/submissions', [AssignmentSubmissionController::class, 'store'])->name('submissions.store');
 
 
     Route::middleware(['role:admin'])->group(function () {
@@ -56,6 +65,12 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::middleware(['role:teacher'])->group(function () {
+
+        Route::get('assignments/{assignment}', [AssignmentController::class, 'showassign'])
+            ->name('assignments.show');
+        Route::get('assignments', [AssignmentController::class, 'indexassign'])
+            ->name('assignments.index');
+
         Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.dashboard');
 
         Route::get('/teacher/courses', [TeacherController::class, 'index1'])->name('teacher.courses');
@@ -67,5 +82,9 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/teacher/lessons/{lesson_id}/task/create', [TeacherController::class, 'addTask'])->name('teacher.task.create');
         Route::post('/teacher/lessons/{lesson_id}/task', [TeacherController::class, 'storeTask'])->name('teacher.task.store');
+
+
+
     });
+
 });

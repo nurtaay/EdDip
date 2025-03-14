@@ -42,4 +42,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function isTeacher()
+    {
+        // Пример: если в таблице users есть поле role, где 'teacher' – преподаватель
+        return $this->role === 'teacher';
+    }
+
 }
