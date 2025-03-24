@@ -53,6 +53,6 @@ class AssignmentController extends Controller
 
         $assignments = Assignment::where('created_by', Auth::id())->get();
 
-        return view('assignments.index', compact('assignments'));
+        return view('assignments.show', compact('assignments'));
     }
 }

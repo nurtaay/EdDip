@@ -1,43 +1,33 @@
 <!-- Counts Section -->
 <section id="counts" class="section counts light-background">
-
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row gy-4">
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="stats-item text-center w-100 h-100">
-                    <span data-purecounter-start="0" data-purecounter-end="1232" data-purecounter-duration="1" class="purecounter"></span>
+                    <span data-purecounter-start="0" data-purecounter-end="{{ $studentsCount }}" data-purecounter-duration="1" class="purecounter"></span>
                     <p>Students</p>
                 </div>
-            </div><!-- End Stats Item -->
+            </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="stats-item text-center w-100 h-100">
-                    <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1" class="purecounter"></span>
+                    <span data-purecounter-start="0" data-purecounter-end="{{ $coursesCount }}" data-purecounter-duration="1" class="purecounter"></span>
                     <p>Courses</p>
                 </div>
-            </div><!-- End Stats Item -->
+            </div>
 
-            <div class="col-lg-3 col-md-6">
+            <div class="col-lg-4 col-md-6">
                 <div class="stats-item text-center w-100 h-100">
-                    <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Events</p>
+                    <span data-purecounter-start="0" data-purecounter-end="{{ $teachersCount }}" data-purecounter-duration="1" class="purecounter"></span>
+                    <p>Teachers</p>
                 </div>
-            </div><!-- End Stats Item -->
-
-            <div class="col-lg-3 col-md-6">
-                <div class="stats-item text-center w-100 h-100">
-                    <span data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Trainers</p>
-                </div>
-            </div><!-- End Stats Item -->
+            </div>
 
         </div>
-
     </div>
-
-</section><!-- /Counts Section -->
+</section>
+<!-- /Counts Section -->
 
 <!-- Why Us Section -->
 <section id="why-us" class="section why-us">

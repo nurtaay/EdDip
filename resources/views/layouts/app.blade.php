@@ -48,19 +48,8 @@
                 <li><a href="#">Trainers</a></li>
                 <li><a href="#">Pricing</a></li>
                 @auth
-                <li class="dropdown"><a href="#"><span>{{ auth()->user()->name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <li class="dropdown"><a href="#"><span>{{ auth()->user()->name }} | {{ auth()->user()->role }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
-                        <li><a href="{{ route('profile.show') }}">Profile</a></li>
-                        <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                                <li><a href="#">Deep Dropdown 1</a></li>
-                                <li><a href="#">Deep Dropdown 2</a></li>
-                                <li><a href="#">Deep Dropdown 3</a></li>
-                                <li><a href="#">Deep Dropdown 4</a></li>
-                                <li><a href="#">Deep Dropdown 5</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Dropdown 2</a></li>
                         <li><a href="{{ route('profile.show') }}">Profile</a></li>
 
                         @auth
@@ -91,30 +80,31 @@
 </header>
 
 <main class="main" style="min-height: 600px">
-
     <div class="mt-4">
         @yield('content')
     </div>
 
-    @auth()
-    <div class="container mt-4">
-        @yield('about')
-    </div>
+    @auth
+        @if(auth()->user()->role === 'user')
+            <div class="container mt-4">
+                @yield('about')
+            </div>
+            <div class="container mt-4">
+                @yield('us')
+            </div>
+            <div class="container mt-4">
+                @yield('card')
+            </div>
+            <div class="container mt-4">
+                @yield('tech')
+            </div>
+        @elseif(auth()->user()->role === 'teacher')
+            <div class="container mt-4">
+                @yield('teacher')
+            </div>
+        @endif
     @endauth
-
-    <div class="container mt-4">
-        @yield('us')
-    </div>
-
-    <div class="container mt-4">
-        @yield('card')
-    </div>
-
-    <div class="container mt-4">
-        @yield('tech')
-    </div>
 </main>
-
 <footer id="footer" class="footer position-relative light-background">
 
     <div class="container footer-top">

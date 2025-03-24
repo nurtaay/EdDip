@@ -11,26 +11,35 @@ class AssignmentSubmissionController extends Controller
 {
     public function store(Request $request, Assignment $assignment)
     {
+        $submission = null;
         // Только студенты могут отправлять задания
         if (Auth::user()->isTeacher()) {
             abort(403);
         }
 
+        // Проверка: уже отправлял?
+        $existingSubmission = AssignmentSubmission::where('assignment_id', $assignment->id)
+            ->where('student_id', Auth::id())
+            ->first();
+
+        if ($existingSubmission) {
+            return redirect()->back()->with('warning', 'Вы уже отправили задание.');
+        }
+
         $request->validate([
-            // Здесь изменили валидацию, чтобы принимать не только видео, но и документы, презентации, текстовые файлы и PDF
-            'video' => 'required|file|mimes:mp4,avi,mov,doc,docx,ppt,pptx,txt,pdf|max:102400', // ограничение 100MB
+            'video' => 'required|file|mimes:mp4,avi,mov,doc,docx,ppt,pptx,txt,pdf|max:102400',
         ]);
 
-        // Сохраняем загруженный файл в публичное хранилище (не забудьте выполнить php artisan storage:link)
         $path = $request->file('video')->store('assignments', 'public');
 
         AssignmentSubmission::create([
             'assignment_id' => $assignment->id,
             'student_id'    => Auth::id(),
-            'video'         => $path, // Если нужно, можно переименовать поле в file
+            'video'         => $path,
         ]);
 
         return redirect()->back()->with('success', 'Домашнее задание отправлено.');
     }
+
 
 }

@@ -2,7 +2,7 @@
 
 @section('title', 'Мои курсы')
 
-@section('content')
+@section('teacher')
     <h1 class="mb-4">Мои курсы</h1>
     <a href="{{ route('teacher.courses.create') }}" class="btn btn-success mb-3">Добавить курс</a>
 

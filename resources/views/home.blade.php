@@ -19,6 +19,7 @@
     </section><!-- /Hero Section -->
 @endsection
 
+
 @section('about')
     @include('about')
 @endsection
@@ -33,4 +34,8 @@
 
 @section('tech')
     @include('tech')
+@endsection
+
+@section('teacher')
+    @include('teacher.courses.index')
 @endsection

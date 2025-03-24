@@ -98,6 +98,12 @@
                                             {!! nl2br(e($lesson->content)) !!}
                                         </div>
                                     </div>
+                                    {{-- Ссылка: Только для преподавателя --}}
+{{--                                    @if(auth()->check() && auth()->user()->role === 'teacher')--}}
+                                        <a href="{{ route('lessons.show', $lesson->id) }}" class="btn btn-sm btn-outline-secondary mt-3">
+                                            create homework
+                                        </a>
+{{--                                    @endif--}}
                                 </div>
                             </div>
                         @endforeach
