@@ -19,6 +19,10 @@
     </section><!-- /Hero Section -->
 @endsection
 
+@section('about')
+    @include('about')
+@endsection
+
 @section('us')
     @include('us')
 @endsection

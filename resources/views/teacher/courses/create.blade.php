@@ -17,6 +17,21 @@
         </div>
 
         <div class="mb-3">
+            <label class="form-label">Цена (₸)</label>
+            <input type="number" step="0.01" name="price" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Категория</label>
+            <select name="cat_id" class="form-control" required>
+                <option value="">-- Выберите категорию --</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
             <label class="form-label">Изображение</label>
             <input type="file" name="image" class="form-control" accept="image/*">
         </div>

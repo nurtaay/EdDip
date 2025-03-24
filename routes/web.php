@@ -6,6 +6,7 @@ use App\Http\Controllers\AssignmentSubmissionController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeacherController;
 
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +29,15 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
+
+    Route::post('/logout', function () {
+        Auth::logout();
+        return redirect('/');
+    })->name('logout');
+
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('/profile/password', [ProfileController::class, 'changePassword'])->name('profile.password');
 
 
     Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -82,8 +92,6 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/teacher/lessons/{lesson_id}/task/create', [TeacherController::class, 'addTask'])->name('teacher.task.create');
         Route::post('/teacher/lessons/{lesson_id}/task', [TeacherController::class, 'storeTask'])->name('teacher.task.store');
-
-
 
     });
 

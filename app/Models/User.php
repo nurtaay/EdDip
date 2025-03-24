@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'image',
     ];
 
     /**
@@ -48,5 +49,11 @@ class User extends Authenticatable
         // Пример: если в таблице users есть поле role, где 'teacher' – преподаватель
         return $this->role === 'teacher';
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
 
 }

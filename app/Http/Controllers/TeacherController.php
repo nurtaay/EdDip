@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Task;
@@ -25,7 +26,8 @@ class TeacherController extends Controller
     //  Создание курса
     public function create()
     {
-        return view('teacher.courses.create');
+        $categories = Category::all();
+        return view('teacher.courses.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -33,6 +35,8 @@ class TeacherController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'nullable',
+            'price' => 'required|numeric|min:0',
+            'cat_id' => 'required|exists:categories,id',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -44,6 +48,8 @@ class TeacherController extends Controller
         Course::create([
             'title' => $request->title,
             'description' => $request->description,
+            'price' => $request->price,
+            'cat_id' => $request->cat_id,
             'image' => $imagePath,
             'teacher_id' => Auth::id(),
         ]);
@@ -61,7 +67,7 @@ class TeacherController extends Controller
     {
         $request->validate([
             'title' => 'required',
-            'content' => 'nullable',
+            'content' => 'required',
             'video' => 'mimes:mp4,mov,avi,wmv|max:20480',
         ]);
 

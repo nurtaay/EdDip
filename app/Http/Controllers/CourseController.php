@@ -26,7 +26,7 @@ class CourseController extends Controller
     // Просмотр одного курса с уроками
     public function show($id)
     {
-        $course = Course::with('lessons')->findOrFail($id);
+        $course = Course::with(['lessons', 'category'])->findOrFail($id);
         return view('teacher.courses.show', compact('course'));
     }
 

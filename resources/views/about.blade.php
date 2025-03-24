@@ -1,3 +1,4 @@
+@auth()
     <!-- About Section -->
     <section id="about" class="about section">
 
@@ -28,5 +29,5 @@
         </div>
 
     </section><!-- /About Section -->
-
+@endauth
 

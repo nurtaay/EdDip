@@ -47,9 +47,10 @@
                 <li><a href="#">Courses</a></li>
                 <li><a href="#">Trainers</a></li>
                 <li><a href="#">Pricing</a></li>
+                @auth
                 <li class="dropdown"><a href="#"><span>{{ auth()->user()->name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
-                        <li><a href="#">Profile</a></li>
+                        <li><a href="{{ route('profile.show') }}">Profile</a></li>
                         <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                             <ul>
                                 <li><a href="#">Deep Dropdown 1</a></li>
@@ -60,10 +61,26 @@
                             </ul>
                         </li>
                         <li><a href="#">Dropdown 2</a></li>
-                        <li><a href="#">Dropdown 3</a></li>
-                        <li><a href="#">Logout</a></li>
+                        <li><a href="{{ route('profile.show') }}">Profile</a></li>
+
+                        @auth
+                            @if(auth()->user()->isAdmin())
+                                <li><a href="{{ route('admin.dashboard') }}">Admin Page</a></li>
+                            @endif
+
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item border-0 bg-transparent p-0" style="color: #000; cursor: pointer;">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
+                        @endauth
+
                     </ul>
                 </li>
+                @endauth
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -79,10 +96,11 @@
         @yield('content')
     </div>
 
+    @auth()
     <div class="container mt-4">
-        @include('about')
+        @yield('about')
     </div>
-
+    @endauth
 
     <div class="container mt-4">
         @yield('us')
