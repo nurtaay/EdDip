@@ -54,7 +54,7 @@
 
                         @auth
                             @if(auth()->user()->isAdmin())
-                                <li><a href="{{ route('admin.dashboard') }}">Admin Page</a></li>
+                                <li><a href="{{ route('admin.users') }}">Admin Page</a></li>
                             @endif
 
                             <li>

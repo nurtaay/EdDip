@@ -12,6 +12,7 @@
                     <th scope="col">Description</th>
                     <th scope="col">Teacher</th>
                     <th scope="col">Image</th>
+                    <th scope="col">Status</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -29,6 +30,7 @@
                                 N/A
                             @endif
                         </td>
+                        <td>{{ $course->status }}</td>
                         <td>
                             <a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-info btn-sm">View</a>
                             <a href="{{ route('admin.courses.edit', $course->id) }}" class="btn btn-warning btn-sm">Edit</a>

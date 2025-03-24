@@ -42,10 +42,20 @@ class CourseController extends Controller
 
     public function indexstud()
     {
-        // Получаем все курсы вместе с уроками
-        $courses = Course::with('lessons')->get();
-
+        $courses = Course::where('status', 'approved')->with('category')->latest()->get();
         return view('student.courses.index', compact('courses'));
     }
+
+
+    public function showForStudent($id)
+    {
+        $course = Course::where('id', $id)
+            ->where('status', 'approved')
+            ->with(['lessons', 'category'])
+            ->firstOrFail();
+
+        return view('student.courses.show', compact('course'));
+    }
+
 
 }

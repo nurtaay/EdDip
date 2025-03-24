@@ -10,6 +10,17 @@
         @foreach($courses as $course)
             <div class="col-md-4">
                 <div class="card mb-4">
+                    <p class="mt-2">
+                        <strong>Статус:</strong>
+                        @if($course->status === 'pending')
+                            <span class="badge bg-warning text-dark">На модерации</span>
+                        @elseif($course->status === 'approved')
+                            <span class="badge bg-success">Подтвержден</span>
+                        @elseif($course->status === 'rejected')
+                            <span class="badge bg-danger">Отклонен</span>
+                        @endif
+                    </p>
+
                     <img src="{{ asset('storage/' . $course->image) }}" class="card-img-top" alt="Курс">
                     <div class="card-body">
                         <h5 class="card-title">{{ $course->title }}</h5>

@@ -26,6 +26,13 @@ class TeacherController extends Controller
     //  Создание курса
     public function create()
     {
+        $pendingCourse = Course::where('teacher_id', Auth::id())
+            ->where('status', 'pending')
+            ->first();
+
+        if ($pendingCourse) {
+            return redirect()->route('teacher.courses')->with('error', 'У вас уже есть курс на модерации. Дождитесь его проверки.');
+        }
         $categories = Category::all();
         return view('teacher.courses.create', compact('categories'));
     }
@@ -52,6 +59,7 @@ class TeacherController extends Controller
             'cat_id' => $request->cat_id,
             'image' => $imagePath,
             'teacher_id' => Auth::id(),
+            'status' => 'pending',
         ]);
 
         return redirect()->route('teacher.courses')->with('success', 'Курс создан!');

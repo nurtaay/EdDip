@@ -18,8 +18,35 @@ class AdminController extends Controller
     // Список всех пользователей
     public function index1()
     {
+        $courses = Course::where('status', 'pending')->with('user')->get();
         $users = User::all();
         return view('admin.users.index', compact('users'));
+    }
+    public function index2()
+    {
+        $courses = Course::where('status', 'pending')->with('user')->get();
+        $users = User::all();
+        return view('admin.index', compact('users', 'courses'));
+    }
+
+    // Подтвердить курс
+    public function approve($id)
+    {
+        $course = Course::findOrFail($id);
+        $course->status = 'approved';
+        $course->save();
+
+        return redirect()->back()->with('success', 'Курс подтвержден');
+    }
+
+    // Отклонить курс
+    public function reject($id)
+    {
+        $course = Course::findOrFail($id);
+        $course->status = 'rejected';
+        $course->save();
+
+        return redirect()->back()->with('error', 'Курс отклонен');
     }
 
     // Форма создания пользователя

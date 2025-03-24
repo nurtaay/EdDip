@@ -13,7 +13,7 @@ class HomeController extends Controller
         $studentsCount = User::where('role', 'user')->count();
         $teachersCount = User::where('role', 'teacher')->count();
 
-        $courses = Course::all();
+        $courses = Course::where('status', 'approved')->with('category')->latest()->get();
         return view('home', compact('courses', 'coursesCount', 'studentsCount', 'teachersCount'));
     }
 }

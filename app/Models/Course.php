@@ -9,7 +9,7 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'image', 'teacher_id', 'price', 'cat_id'];
+    protected $fillable = ['title', 'description', 'image', 'teacher_id', 'price', 'cat_id', 'status'];
 
     public function lessons()
     {
@@ -26,5 +26,8 @@ class Course extends Model
         return $this->belongsTo(Category::class, 'cat_id');
     }
 
-
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
 }

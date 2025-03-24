@@ -1,18 +1,4 @@
 @section('card')
-{{--    <div class="row">--}}
-{{--        @foreach($courses as $course)--}}
-{{--            <div class="col-md-4">--}}
-{{--                <div class="card mb-4">--}}
-{{--                    <img src="{{ asset('storage/' . $course->image) }}" class="card-img-top" alt="Курс">--}}
-{{--                    <div class="card-body">--}}
-{{--                        <h5 class="card-title">{{ $course->title }}</h5>--}}
-{{--                        <p class="card-text">{{ $course->description }}</p>--}}
-{{--                        <a href="{{ route('teacher.courses.show', $course->id) }}" class="btn btn-primary">Подробнее</a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        @endforeach--}}
-{{--    </div>--}}
 <style>
     .course-img {
         width: 300px;
@@ -47,7 +33,7 @@
                                         <p class="category mb-0 text-muted">{{ $course->category->name }}</p>
                                         <p class="price mb-0 text-success fw-bold">{{ $course->price }} ₸</p>
                                     </div>
-                                    <h5 class="mb-2"><a href="{{ route('teacher.courses.show', $course->id) }}" class="text-decoration-none">{{ $course->title }}</a></h5>
+                                    <h5 class="mb-2"><a href="{{ route('student.courses.show', $course->id) }}" class="text-decoration-none">{{ $course->title }}</a></h5>
                                     <p class="description mb-3">{{ Str::limit($course->description, 100) }}</p>
                                 </div>
                                 <div class="trainer d-flex justify-content-between align-items-center mt-auto">

@@ -29,6 +29,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
+    Route::get('/student/courses/{id}', [CourseController::class, 'showForStudent'])->name('student.courses.show');
 
     Route::post('/logout', function () {
         Auth::logout();
@@ -53,7 +54,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+        Route::post('/courses/{id}/approve', [AdminController::class, 'approve'])->name('admin.courses.approve');
+        Route::post('/courses/{id}/reject', [AdminController::class, 'reject'])->name('admin.courses.reject');
         Route::get('/admin/users', [AdminController::class, 'index1'])->name('admin.users');
+        Route::get('/admin/pending', [AdminController::class, 'index2'])->name('pending');
         Route::get('/admin/user/{id}/edit', [AdminController::class, 'edit'])->name('admin.user.edit');
         Route::put('/admin/user/{id}', [AdminController::class, 'update'])->name('admin.user.update');
         Route::delete('/admin/user/{id}', [AdminController::class, 'destroy'])->name('admin.user.delete');
