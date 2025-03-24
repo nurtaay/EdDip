@@ -28,7 +28,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'only.subscribed'])->group(function () {
+    Route::get('/subscription/plans', [\App\Http\Controllers\SubscriptionController::class, 'showPlans'])->name('subscription.plans');
+    Route::post('/subscription/subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
+
     Route::get('/student/courses/{id}', [CourseController::class, 'showForStudent'])->name('student.courses.show');
 
     Route::post('/logout', function () {

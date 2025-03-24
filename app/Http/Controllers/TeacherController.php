@@ -60,6 +60,7 @@ class TeacherController extends Controller
             'image' => $imagePath,
             'teacher_id' => Auth::id(),
             'status' => 'pending',
+
         ]);
 
         return redirect()->route('teacher.courses')->with('success', 'Курс создан!');
@@ -77,6 +78,8 @@ class TeacherController extends Controller
             'title' => 'required',
             'content' => 'required',
             'video' => 'mimes:mp4,mov,avi,wmv|max:20480',
+            'is_preview' => 'nullable',
+
         ]);
 
         $videoPath = null;
@@ -89,6 +92,8 @@ class TeacherController extends Controller
             'title' => $request->title,
             'content' => $request->content,
             'video' => $videoPath,
+            'is_preview' => $request->has('is_preview'),
+
         ]);
 
         return redirect()->route('teacher.courses')->with('success', 'Урок добавлен!');

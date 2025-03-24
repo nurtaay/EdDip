@@ -54,8 +54,17 @@ class CourseController extends Controller
             ->with(['lessons', 'category'])
             ->firstOrFail();
 
+        // Если у пользователя нет подписки, показываем только превью-уроки
+        if (!auth()->check() || !auth()->user()->hasActiveSubscription()) {
+            // фильтруем только открытые уроки
+            $course->lessons = $course->lessons->filter(function ($lesson) {
+                return $lesson->is_preview;
+            });
+        }
+
         return view('student.courses.show', compact('course'));
     }
+
 
 
 }

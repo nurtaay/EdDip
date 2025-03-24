@@ -21,6 +21,11 @@
             <input type="file" name="video" class="form-control" accept="video/*">
         </div>
 
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" name="is_preview" id="is_preview" {{ old('is_preview') ? 'checked' : '' }}>
+            <label class="form-check-label" for="is_preview">Сделать урок доступным для всех (превью)</label>
+        </div>
+
         <button type="submit" class="btn btn-primary">Добавить</button>
     </form>
 @endsection

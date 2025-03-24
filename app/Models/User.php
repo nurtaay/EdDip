@@ -60,5 +60,19 @@ class User extends Authenticatable
         return $this->role === 'user';
     }
 
+    public function hasActiveSubscription()
+    {
+        return $this->subscriptions()
+            ->where('status', 'active')
+            ->where('end_date', '>', now())
+            ->exists();
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+
 
 }
