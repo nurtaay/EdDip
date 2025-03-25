@@ -5,8 +5,18 @@
 @section('content')
     <div class="container mt-4">
         <h2 class="mb-4">Профиль пользователя</h2>
+        {{-- Статус подписки --}}
+        <div class="alert alert-{{ $activeSub ? 'success' : 'secondary' }} mb-4">
+            @if($activeSub)
+                <strong>Подписка:</strong> {{ ucfirst($activeSub->type) }} — активна до {{ $activeSub->end_date->format('d.m.Y') }}
+                <a href="{{ route('subscription.plans') }}" class="btn btn-outline-light btn-sm ms-3">Продлить</a>
+            @else
+                <strong>Подписка:</strong> отсутствует
+                <a href="{{ route('subscription.plans') }}" class="btn btn-outline-primary btn-sm ms-3">Оформить</a>
+            @endif
+        </div>
 
-        @if(session('success'))
+    @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
@@ -78,5 +88,43 @@
                 </form>
             </div>
         </div>
+        @if($allSubs->count())
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="mb-3">История подписок</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0">
+                            <thead>
+                            <tr>
+                                <th>Тип</th>
+                                <th>Начало</th>
+                                <th>Окончание</th>
+                                <th>Статус</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($allSubs as $sub)
+                                <tr>
+                                    <td>{{ ucfirst($sub->type) }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($sub->start_date)->format('d.m.Y') }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($sub->end_date)->format('d.m.Y') }}</td>
+                                    <td>
+                                        @if($sub->status === 'active')
+                                            <span class="text-success">Активна</span>
+                                        @elseif($sub->status === 'expired')
+                                            <span class="text-danger">Истекла</span>
+                                        @else
+                                            <span class="text-muted">{{ $sub->status }}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        @endif
+
     </div>
 @endsection

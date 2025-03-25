@@ -9,6 +9,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TeacherController;
 
+use App\Models\Plan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,8 +30,19 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware(['auth', 'only.subscribed'])->group(function () {
+
+    Route::get('/api/get-plan-price/{id}', function ($id) {
+        $plan = Plan::findOrFail($id);
+        $usd = round($plan->price / 470, 2); // Примерно по текущему курсу
+        return response()->json(['price' => $usd]);
+    });
+
+    Route::get('/subscription/success', [\App\Http\Controllers\SubscriptionController::class, 'confirmAfterPayPal'])
+        ->name('subscription.success');
+
+
     Route::get('/subscription/plans', [\App\Http\Controllers\SubscriptionController::class, 'showPlans'])->name('subscription.plans');
-    Route::post('/subscription/subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
+//    Route::post('/subscription/subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
 
     Route::get('/student/courses/{id}', [CourseController::class, 'showForStudent'])->name('student.courses.show');
 
