@@ -9,7 +9,8 @@ class AssignmentSubmission extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['assignment_id', 'student_id', 'video'];
+    protected $fillable = ['assignment_id', 'student_id', 'files'];
+
 
     public function assignment()
     {
@@ -20,4 +21,10 @@ class AssignmentSubmission extends Model
     {
         return $this->belongsTo(User::class, 'student_id');
     }
+
+    protected $casts = [
+        'files' => 'array',
+    ];
+
 }
+

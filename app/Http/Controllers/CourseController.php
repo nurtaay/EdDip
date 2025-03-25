@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -51,8 +52,13 @@ class CourseController extends Controller
     {
         $course = Course::where('id', $id)
             ->where('status', 'approved')
-            ->with(['lessons', 'category'])
+            ->with(['lessons', 'category', 'students']) // добавим сюда
             ->firstOrFail();
+
+        $isEnrolled = false;
+        if (auth()->check()) {
+            $isEnrolled = $course->students->contains(auth()->id());
+        }
 
         // Если у пользователя нет подписки, показываем только превью-уроки
         if (!auth()->check() || !auth()->user()->hasActiveSubscription()) {
@@ -62,7 +68,25 @@ class CourseController extends Controller
             });
         }
 
-        return view('student.courses.show', compact('course'));
+        return view('student.courses.show', compact('course', 'isEnrolled'));
+    }
+
+    public function enroll($id)
+    {
+        $course = Course::findOrFail($id);
+        $user = Auth::user();
+
+        // Проверка, если уже записан
+        if (!$user->enrolledCourses->contains($course->id)) {
+            $user->enrolledCourses()->attach($course->id);
+        }
+
+        return redirect()->back()->with('success', 'Вы успешно записались на курс!');
+    }
+    public function myCourses()
+    {
+        $courses = Auth::user()->enrolledCourses()->with('category')->get();
+        return view('student.courses.my', compact('courses'));
     }
 
 

@@ -30,4 +30,10 @@ class Course extends Model
     {
         return $query->where('status', 'approved');
     }
+
+    public function students()
+    {
+        return $this->belongsToMany(User::class, 'course_user')->withTimestamps();
+    }
+
 }

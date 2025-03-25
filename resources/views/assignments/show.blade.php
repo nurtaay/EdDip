@@ -16,25 +16,31 @@
             @if($submissions->count())
                 <ul class="list-group list-group-flush">
                     @foreach($submissions as $submission)
-                        <li class="list-group-item py-3 px-0">
-                            <div class="d-flex justify-content-between align-items-start flex-wrap">
-                                <div>
-                                    <strong>{{ $submission->student->name }}</strong>
-                                    <p class="mb-1 small text-muted">
-                                        Отправлено: {{ $submission->created_at->format('d.m.Y H:i') }}
-                                    </p>
-                                    <a href="{{ asset('storage/' . $submission->video) }}" target="_blank" class="text-decoration-none">
-                                        {{ basename($submission->video) }}
-                                    </a>
-                                </div>
-                                <div>
-                                    <a href="{{ asset('storage/' . $submission->video) }}" class="btn btn-outline-primary btn-sm" download>
-                                        Скачать
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
+                        <tr>
+                            <td>{{ $submission->student->name }}</td>
+                            <td>
+                                @foreach($submission->files as $file)
+                                    <a href="{{ asset('storage/' . $file) }}" target="_blank">Файл</a><br>
+                                @endforeach
+                            </td>
+                            <td>
+                                @if($submission->created_at > $assignment->deadline)
+                                    <span class="text-danger">Просрочено</span>
+                                @else
+                                    <span class="text-success">Вовремя</span>
+                                @endif
+                            </td>
+                            <td>
+                                <form action="{{ route('assignment.grade', $submission->id) }}" method="POST">
+                                    @csrf
+                                    <input type="number" name="grade" value="{{ $submission->grade }}" class="form-control" min="0" max="100">
+                                    <button class="btn btn-sm btn-success mt-2">Сохранить</button>
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
+
+
                 </ul>
             @else
                 <div class="alert alert-info mb-0">

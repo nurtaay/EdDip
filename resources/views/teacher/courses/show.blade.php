@@ -25,6 +25,9 @@
             </div>
         </nav>
     </div><!-- End Page Title -->
+    <a href="{{ route('teacher.courses.students', $course->id) }}" class="btn btn-outline-secondary btn-sm">
+        👥 Студенты курса
+    </a>
 
     <!-- Courses Course Details Section -->
     <section id="courses-course-details" class="courses-course-details section">

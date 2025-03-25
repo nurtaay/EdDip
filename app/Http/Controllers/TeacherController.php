@@ -118,5 +118,18 @@ class TeacherController extends Controller
 
         return redirect()->route('teacher.courses')->with('success', 'Задание добавлено!');
     }
+
+    public function students($id)
+    {
+        $course = Course::with('students')->findOrFail($id);
+
+        // Проверка: чтобы чужие курсы нельзя было смотреть
+        if ($course->teacher_id !== auth()->id()) {
+            abort(403);
+        }
+
+        return view('teacher.courses.students', compact('course'));
+    }
+
 }
 

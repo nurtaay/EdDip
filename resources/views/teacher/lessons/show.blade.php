@@ -26,6 +26,13 @@
                                 <label for="description" class="form-label">Описание задания</label>
                                 <textarea name="description" id="description" class="form-control" rows="4" required></textarea>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="deadline" class="form-label">Дедлайн</label>
+                                <input type="datetime-local" name="deadline" class="form-control" required>
+                            </div>
+
+
                             <button type="submit" class="btn btn-primary">Создать</button>
                         </form>
                     @endif
@@ -44,21 +51,17 @@
                                 Вы уже отправили задание.
                             </div>
                             <p><strong>Файл:</strong>
-                                <a href="{{ asset('storage/' . $submission->file) }}" target="_blank">
-                                    {{ basename($submission->file) }}
+                                <a href="{{ asset('storage/' . $submission->$video) }}" target="_blank">
+                                    {{ basename($submission->$video) }}
                                 </a>
                             </p>
                             <p><strong>Дата отправки:</strong> {{ $submission->created_at->format('d.m.Y H:i') }}</p>
                         @else
                             <form action="{{ route('submissions.store', $assignment->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="mb-3">
-                                    <label for="video" class="form-label">Загрузите выполненное задание</label>
-                                    <input type="file" name="video" id="video" class="form-control" required>
-                                    <div class="form-text">Поддерживаются видео, документы, презентации, текстовые файлы</div>
-                                </div>
-                                <button type="submit" class="btn btn-success">Отправить</button>
-                            </form>
+                                <label class="form-label">Прикрепите файл(ы)</label>
+                                <input type="file" name="files[]" multiple class="form-control mb-3">
+                                <button class="btn btn-primary">Отправить</button>
                         @endif
                     </div>
                 </div>

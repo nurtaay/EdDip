@@ -51,7 +51,9 @@
                 <li class="dropdown"><a href="#"><span>{{ auth()->user()->name }} | {{ auth()->user()->role }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                     <ul>
                         <li><a href="{{ route('profile.show') }}">Profile</a></li>
-
+                        @if(auth()->user()->isStudent())
+                            <li><a href="{{ route('student.courses.my') }}">my courses</a></li>
+                        @endif
                         @auth
                             @if(auth()->user()->isAdmin())
                                 <li><a href="{{ route('admin.users') }}">Admin Page</a></li>

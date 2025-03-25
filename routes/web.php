@@ -29,7 +29,18 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::middleware(['auth', 'only.subscribed'])->group(function () {
+Route::middleware(['auth'])->group(function () {
+    Route::post('/courses/{id}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
+    Route::get('/my-courses', [CourseController::class, 'myCourses'])->name('student.courses.my');
+    Route::get('/teacher/courses/{id}/students', [TeacherController::class, 'students'])
+        ->middleware(['auth'])
+        ->name('teacher.courses.students');
+
+    Route::post('/assignments/submission/{id}/grade', [AssignmentSubmissionController::class, 'grade'])
+        ->name('assignment.grade');
+
+
+
 
     Route::get('/api/get-plan-price/{id}', function ($id) {
         $plan = Plan::findOrFail($id);
