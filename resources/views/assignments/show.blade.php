@@ -16,10 +16,12 @@
             @if($submissions->count())
                 <ul class="list-group list-group-flush">
                     @foreach($submissions as $submission)
+
                         <tr>
                             <td>{{ $submission->student->name }}</td>
                             <td>
-                                @foreach($submission->files as $file)
+                                @foreach(json_decode($submission->files, true) ?? [] as $file)
+{{--                                    {{ dd($file) }}--}}
                                     <a href="{{ asset('storage/' . $file) }}" target="_blank">Файл</a><br>
                                 @endforeach
                             </td>
@@ -34,6 +36,11 @@
                                 <form action="{{ route('assignment.grade', $submission->id) }}" method="POST">
                                     @csrf
                                     <input type="number" name="grade" value="{{ $submission->grade }}" class="form-control" min="0" max="100">
+
+                                    <div class="mb-2">
+                                        <label>Комментарий</label>
+                                        <textarea name="comment" class="form-control">{{ $submission->comment }}</textarea>
+                                    </div>
                                     <button class="btn btn-sm btn-success mt-2">Сохранить</button>
                                 </form>
                             </td>

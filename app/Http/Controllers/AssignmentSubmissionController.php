@@ -49,10 +49,12 @@ class AssignmentSubmissionController extends Controller
     {
         $request->validate([
             'grade' => 'required|integer|min:0|max:100',
+            'comment' => 'nullable|string|max:1000',
         ]);
 
         $submission = AssignmentSubmission::findOrFail($id);
         $submission->grade = $request->grade;
+        $submission->comment = $request->comment;
         $submission->save();
 
         return back()->with('success', 'Оценка сохранена!');

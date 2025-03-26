@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assignment;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +90,33 @@ class CourseController extends Controller
         return view('student.courses.my', compact('courses'));
     }
 
+    public function calculateFinalGradeForStudent($courseId)
+    {
+        $course = Course::with('lessons.assignments')->findOrFail($courseId);
+        $student = Auth::user();
+
+        $assignments = Assignment::whereHas('lesson', function ($q) use ($courseId) {
+            $q->where('course_id', $courseId);
+        })->get();
+
+        $total = 0;
+        $max = 0;
+
+        foreach ($assignments as $assignment) {
+            $submission = $assignment->submissions()
+                ->where('student_id', $student->id)
+                ->first();
+
+            if ($submission && $submission->grade !== null) {
+                $total += $submission->grade;
+                $max += $assignment->max_score;
+            }
+        }
+
+        $final = $max > 0 ? round(($total / $max) * 100) : null;
+
+        return view('student.courses.final-grade', compact('course', 'final'));
+    }
 
 
 }

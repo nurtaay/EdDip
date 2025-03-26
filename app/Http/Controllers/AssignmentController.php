@@ -26,7 +26,7 @@ class AssignmentController extends Controller
             'created_by'   => Auth::id(),
             'description'  => $request->description,
             'deadline' => $request->deadline,
-
+            'max_score' => $request->max_score,
         ]);
 
         return redirect()->route('assignments.show', $assignment->id)

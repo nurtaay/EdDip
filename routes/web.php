@@ -30,6 +30,11 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::middleware(['auth'])->group(function () {
+    Route::get('/courses/{id}/grade', [CourseController::class, 'calculateFinalGradeForStudent'])
+        ->middleware('auth')
+        ->name('student.courses.final-grade');
+
+
     Route::post('/courses/{id}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
     Route::get('/my-courses', [CourseController::class, 'myCourses'])->name('student.courses.my');
     Route::get('/teacher/courses/{id}/students', [TeacherController::class, 'students'])

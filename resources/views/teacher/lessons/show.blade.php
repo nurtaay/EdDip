@@ -32,6 +32,10 @@
                                 <input type="datetime-local" name="deadline" class="form-control" required>
                             </div>
 
+                            <div class="mb-3">
+                                <label for="max_score" class="form-label">Максимальный балл</label>
+                                <input type="number" name="max_score" class="form-control" value="100" min="1" max="100">
+                            </div>
 
                             <button type="submit" class="btn btn-primary">Создать</button>
                         </form>
@@ -40,36 +44,37 @@
             </div>
         @else
             {{-- Студент --}}
-            @if($assignment)
-                <div class="card shadow-sm mb-4">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3">Домашнее задание</h5>
-                        <p class="mb-3">{{ $assignment->description }}</p>
+            @if($submission)
+                <div class="alert alert-success mb-3">
+                    <strong>✅ Вы уже отправили задание.</strong>
+                </div>
 
-                        @if($submission)
-                            <div class="alert alert-success">
-                                Вы уже отправили задание.
-                            </div>
-                            <p><strong>Файл:</strong>
-                                <a href="{{ asset('storage/' . $submission->$video) }}" target="_blank">
-                                    {{ basename($submission->$video) }}
-                                </a>
-                            </p>
-                            <p><strong>Дата отправки:</strong> {{ $submission->created_at->format('d.m.Y H:i') }}</p>
-                        @else
-                            <form action="{{ route('submissions.store', $assignment->id) }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-                                <label class="form-label">Прикрепите файл(ы)</label>
-                                <input type="file" name="files[]" multiple class="form-control mb-3">
-                                <button class="btn btn-primary">Отправить</button>
-                        @endif
-                    </div>
-                </div>
+                <p><strong>Файлы:</strong><br>
+                    @foreach($submission->files ?? [] as $file)
+                        <a href="{{ asset('storage/' . $file) }}" target="_blank">
+                            {{ basename($file) }}
+                        </a><br>
+                    @endforeach
+                </p>
+
+                <p><strong>Дата отправки:</strong> {{ $submission->created_at->format('d.m.Y H:i') }}</p>
+
+                @if($submission->grade)
+                    <p class="mt-2 text-primary">💯 Ваша оценка: <strong>{{ $submission->grade }} / {{ $assignment->max_score }}</strong></p>
+                @endif
+
+                @if($submission->comment)
+                    <p class="text-muted fst-italic">📝 Комментарий преподавателя: {{ $submission->comment }}</p>
+                @endif
             @else
-                <div class="alert alert-info">
-                    Домашнее задание пока не создано.
-                </div>
+                <form action="{{ route('submissions.store', $assignment->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <label class="form-label">Прикрепите файл(ы)</label>
+                    <input type="file" name="files[]" multiple class="form-control mb-3">
+                    <button class="btn btn-primary">Отправить</button>
+                </form>
             @endif
+
         @endif {{-- ← это закрытие блока @if(auth()->user()->isTeacher()) --}}
     </div>
 @endsection
