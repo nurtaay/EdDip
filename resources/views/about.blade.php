@@ -1,33 +1,33 @@
 @auth()
-    <!-- About Section -->
-    <section id="about" class="about section">
+    <!-- Секция: О нас -->
+    <section id="about" class="about section bg-white py-5">
 
         <div class="container">
 
-            <div class="row gy-4">
+            <div class="row gy-4 items-center">
 
                 <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-                    <img src="assets/img/about.jpg" class="img-fluid" alt="">
+{{--                    <img src="assets/img/about.jpg" class="img-fluid rounded-xl shadow-md" alt="О нас">--}}
                 </div>
 
                 <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
-                    <h3>Voluptatem dignissimos provident quasi corporis</h3>
-                    <p class="fst-italic">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua.
+                    <h3 class="text-2xl font-semibold mb-4">О нашем образовательном центре</h3>
+                    <p class="italic text-gray-700 mb-4">
+                        Мы создаём доступное и качественное образование для всех, кто стремится к знаниям и развитию.
                     </p>
-                    <ul>
-                        <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                        <li><i class="bi bi-check-circle"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                        <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
+                    <ul class="list-disc pl-5 text-gray-700 space-y-2">
+                        <li>Практические курсы и индивидуальный подход к каждому студенту.</li>
+                        <li>Опытные преподаватели и современные методики обучения.</li>
+                        <li>Поддержка и сопровождение на всех этапах обучения.</li>
                     </ul>
-                    <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
+                    <a href="#" class="inline-block mt-4 text-blue-600 hover:underline font-medium">
+                        Подробнее →
+                    </a>
                 </div>
 
             </div>
 
         </div>
 
-    </section><!-- /About Section -->
+    </section>
 @endauth
-

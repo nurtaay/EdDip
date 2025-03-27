@@ -82,7 +82,9 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'ru',
+    'fallback_locale' => 'ru',
+
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +97,6 @@ return [
     |
     */
 
-    'fallback_locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
@@ -108,7 +109,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => 'ru',
 
     /*
     |--------------------------------------------------------------------------
@@ -153,6 +154,10 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+    'languages' => [
+        'kz' => 'kz',
+        'ru' => 'ru',
+    ],
 
     'providers' => [
 

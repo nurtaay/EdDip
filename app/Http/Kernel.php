@@ -66,6 +66,9 @@ class Kernel extends HttpKernel
         'role' => \App\Http\Middleware\RoleMiddleware::class,
         'only.subscribed' => \App\Http\Middleware\OnlySubscribed::class,
         'pro' => \App\Http\Middleware\CheckProAccess::class,
-
+        'web' => [
+            // ...
+            \App\Http\Middleware\SetLocale::class,
+        ],
     ];
 }

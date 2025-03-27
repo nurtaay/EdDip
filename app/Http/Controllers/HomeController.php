@@ -16,4 +16,11 @@ class HomeController extends Controller
         $courses = Course::where('status', 'approved')->with('category')->latest()->get();
         return view('home', compact('courses', 'coursesCount', 'studentsCount', 'teachersCount'));
     }
+
+    public function switchLang(Request $request, $lang){
+        if(array_key_exists($lang, config('app.languages'))){
+            $request->session()->put('mylocale', $lang);
+        }
+        return back();
+    }
 }

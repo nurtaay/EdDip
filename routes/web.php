@@ -23,13 +23,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('lang/{lang}',[HomeController::class, 'switchLang'])->name('lang.switch');
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'web'])->group(function () {
     Route::get('/courses/{id}/grade', [CourseController::class, 'calculateFinalGradeForStudent'])
         ->middleware('auth')
         ->name('student.courses.final-grade');
@@ -84,6 +86,27 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::middleware(['role:admin'])->group(function () {
+        Route::get('/admin/activity', [\App\Http\Controllers\AdminController::class, 'activityLog'])
+            ->name('admin.activity');
+
+        Route::get('/admin/settings', [AdminController::class, 'settings'])->name('admin.settings');
+        Route::post('/admin/settings', [AdminController::class, 'updateSettings'])->name('admin.settings.update');
+
+
+        Route::get('/categories', [\App\Http\Controllers\AdminController::class, 'categories'])->name('admin.categories');
+            Route::post('/categories', [\App\Http\Controllers\AdminController::class, 'storeCategory'])->name('admin.categories.store');
+            Route::delete('/categories/{id}', [\App\Http\Controllers\AdminController::class, 'deleteCategory'])->name('admin.categories.delete');
+
+        Route::get('/admin/subscriptions', [\App\Http\Controllers\AdminController::class, 'subscriptions'])
+            ->name('admin.subscriptions');
+
+        Route::post('/admin/subscriptions/{id}/cancel', [\App\Http\Controllers\AdminController::class, 'cancelSubscription'])
+            ->name('admin.subscriptions.cancel');
+
+
+        Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])
+            ->name('admin.dashboards');
+
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
         Route::post('/courses/{id}/approve', [AdminController::class, 'approve'])->name('admin.courses.approve');
         Route::post('/courses/{id}/reject', [AdminController::class, 'reject'])->name('admin.courses.reject');
