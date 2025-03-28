@@ -4,8 +4,17 @@
     <div class="container py-4">
         <h3 class="mb-4">{{ __('admin.settings.site_settings') }}</h3>
 
+        {{-- Блок уведомлений --}}
         @if(session('success'))
-            <div class="alert alert-success">{{ __('admin.settings.success_updated') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+            </div>
         @endif
 
         <form method="POST" action="{{ route('admin.settings.update') }}">

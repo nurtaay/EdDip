@@ -4,6 +4,20 @@
     <div class="container">
         <h1>{{ __('admin.new_user') }}</h1>
 
+        {{-- Блок уведомлений --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+
+
         <form action="{{ route('admin.user.store') }}" method="POST">
             @csrf
             <div class="mb-3">

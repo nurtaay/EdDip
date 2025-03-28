@@ -20,7 +20,7 @@ class AssignmentSubmissionController extends Controller
             ->first();
 
         if ($existing) {
-            return redirect()->back()->with('warning', 'Вы уже отправили задание.');
+            return redirect()->back()->with('success', __('alert.hw_sended'));
         }
 
         $request->validate([
@@ -42,7 +42,7 @@ class AssignmentSubmissionController extends Controller
             'files'         => json_encode($paths),
         ]);
 
-        return redirect()->back()->with('success', 'Домашнее задание отправлено.');
+        return redirect()->back()->with('success', __('alert.hw_success'));
     }
 
     public function grade(Request $request, $id)
@@ -57,7 +57,7 @@ class AssignmentSubmissionController extends Controller
         $submission->comment = $request->comment;
         $submission->save();
 
-        return back()->with('success', 'Оценка сохранена!');
+        return back()->with('success', __('alert.mark_success'));
     }
 
 

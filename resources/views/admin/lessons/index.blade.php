@@ -4,11 +4,19 @@
     <div class="container">
         <h1 class="mb-4">{{ __('admin.lessons') }}</h1>
 
+        {{-- Блок уведомлений --}}
         @if(session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
             </div>
         @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+
 
         <div class="table-responsive">
             <table class="table table-striped align-middle">

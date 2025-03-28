@@ -105,6 +105,7 @@
     @endif
 
     <div class="mt-4">
+{{--        @include('components.breadcrumbs')--}}
         @yield('content')
     </div>
 

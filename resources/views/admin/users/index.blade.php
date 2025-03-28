@@ -5,8 +5,21 @@
         <h1>{{ __('admin.list_users') }}</h1>
         <a href="{{ route('admin.user.create') }}" class="btn btn-primary mb-3">{{ __('admin.add_user') }}</a>
 
+{{--        @if(session('success'))--}}
+{{--            <div class="alert alert-success">{{ session('success') }}</div>--}}
+{{--        @endif--}}
+
+        {{-- Блок уведомлений --}}
         @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+            </div>
         @endif
 
         <table class="table table-bordered">

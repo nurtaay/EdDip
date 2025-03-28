@@ -47,7 +47,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return back()->with('success', 'Профиль обновлен!');
+        return back()->with('success', __('alert.profile_updated'));
     }
 
     public function changePassword(Request $request)
@@ -60,13 +60,13 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         if (!\Hash::check($request->current_password, $user->password)) {
-            return back()->withErrors(['current_password' => 'Текущий пароль неверен.']);
+            return back()->with('error', __('alert.password_mismatch'));
         }
 
         $user->password = bcrypt($request->new_password);
         $user->save();
 
-        return back()->with('success', 'Пароль успешно изменён!');
+        return back()->with('success', __('alert.password_updated'));
     }
 
 }

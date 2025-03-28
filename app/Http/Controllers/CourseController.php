@@ -38,7 +38,7 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->route('admin.admincourses')
-            ->with('success', 'Course deleted successfully.');
+            ->with('error', __('alert.course_deleted'));
     }
 
 
@@ -82,7 +82,7 @@ class CourseController extends Controller
             $user->enrolledCourses()->attach($course->id);
         }
 
-        return redirect()->back()->with('success', 'Вы успешно записались на курс!');
+        return redirect()->back()->with('success', __('alert.course_enrolled'));
     }
     public function myCourses()
     {

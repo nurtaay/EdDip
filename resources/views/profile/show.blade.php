@@ -40,11 +40,6 @@
             </div>
         </div>
 
-        <!-- Уведомление -->
-        @if(session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-
         <!-- Управление профилем -->
         <div class="row g-4">
             <div class="col-md-6">

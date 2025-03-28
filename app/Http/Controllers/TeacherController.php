@@ -31,7 +31,7 @@ class TeacherController extends Controller
             ->first();
 
         if ($pendingCourse) {
-            return redirect()->route('teacher.courses')->with('error', 'У вас уже есть курс на модерации. Дождитесь его проверки.');
+            return redirect()->route('teacher.courses')->with('error', __('alert.course_pending'));
         }
         $categories = Category::all();
         return view('teacher.courses.create', compact('categories'));
@@ -63,7 +63,7 @@ class TeacherController extends Controller
 
         ]);
 
-        return redirect()->route('teacher.courses')->with('success', 'Курс создан!');
+        return redirect()->route('teacher.courses')->with('success', __('alert.course_created'));
     }
 
     //  Добавление урока
@@ -96,7 +96,7 @@ class TeacherController extends Controller
 
         ]);
 
-        return redirect()->route('teacher.courses')->with('success', 'Урок добавлен!');
+        return redirect()->route('teacher.courses')->with('success', __('alert.lesson_added'));
     }
 
     //  Добавление задания к уроку
@@ -116,7 +116,7 @@ class TeacherController extends Controller
             'task_text' => $request->task_text,
         ]);
 
-        return redirect()->route('teacher.courses')->with('success', 'Задание добавлено!');
+        return redirect()->route('teacher.courses')->with('success', __('alert.task_added'));
     }
 
     public function students($id)

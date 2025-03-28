@@ -142,6 +142,8 @@
 
         <!-- main -->
         <main class="flex-grow-1 p-4">
+            @include('components.breadcrumbs')
+
             @yield('content')
         </main>
 

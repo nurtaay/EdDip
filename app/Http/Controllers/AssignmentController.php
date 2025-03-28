@@ -30,7 +30,7 @@ class AssignmentController extends Controller
         ]);
 
         return redirect()->route('assignments.show', $assignment->id)
-            ->with('success', 'Домашнее задание создано.');
+            ->with('success', __('alert.admin.homework_created'));
     }
 
     // Отображение задания и списка отправок (только для преподавателя, который его создал)

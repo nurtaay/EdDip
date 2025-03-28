@@ -30,7 +30,7 @@ class AdminController extends Controller{
             'name' => $request->name,
         ]);
 
-        return redirect()->route('admin.categories')->with('success', 'Категория добавлена!');
+        return redirect()->route('admin.categories')->with('success', __('alert.category_added'));
     }
 
     public function deleteCategory($id)
@@ -38,7 +38,7 @@ class AdminController extends Controller{
         $category = Category::findOrFail($id);
         $category->delete();
 
-        return redirect()->route('admin.categories')->with('success', 'Категория удалена!');
+        return redirect()->route('admin.categories')->with('error', __('alert.category_deleted'));
     }
     public function subscriptions(Request $request)
     {
@@ -69,7 +69,7 @@ class AdminController extends Controller{
         $subscription->end_date = now();
         $subscription->save();
 
-        return back()->with('success', 'Подписка отменена вручную.');
+        return back()->with('success', __('alert.subscription_cancelled'));
     }
     public function dashboard()
     {
@@ -109,7 +109,7 @@ class AdminController extends Controller{
         $course->status = 'approved';
         $course->save();
 
-        return redirect()->back()->with('success', 'Курс подтвержден');
+        return redirect()->back()->with('success', __('alert.course_approved'));
     }
 
     // Отклонить курс
@@ -119,7 +119,7 @@ class AdminController extends Controller{
         $course->status = 'rejected';
         $course->save();
 
-        return redirect()->back()->with('error', 'Курс отклонен');
+        return redirect()->back()->with('error', __('alert.course_rejected'));
     }
 
     // Форма создания пользователя
@@ -145,7 +145,7 @@ class AdminController extends Controller{
             'role' => $request->role,
         ]);
 
-        return redirect()->route('admin.users')->with('success', 'Пользователь создан!');
+        return redirect()->route('admin.users')->with('success', __('alert.user_created'));
     }
 
     // Форма редактирования пользователя
@@ -166,7 +166,7 @@ class AdminController extends Controller{
 
         $user->update(['role' => $request->role]);
 
-        return redirect()->route('admin.users')->with('success', 'Роль пользователя обновлена!');
+        return redirect()->route('admin.users')->with('success', __('alert.user_updated'));
     }
 
     // Удаление пользователя
@@ -175,7 +175,7 @@ class AdminController extends Controller{
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('admin.users')->with('success', 'Пользователь удалён!');
+        return redirect()->route('admin.users')->with('error', __('alert.user_deleted'));
     }
 
     /**
@@ -199,7 +199,7 @@ class AdminController extends Controller{
         $course->delete();
 
         return redirect()->route('admin.adminlessons')
-            ->with('success', 'Lesson deleted successfully.');
+            ->with('error', __('alert.lesson_deleted'));
     }
 
     public function activityLog(Request $request)
@@ -261,7 +261,7 @@ class AdminController extends Controller{
         Setting::set('support_email', $request->support_email);
         Setting::set('banner_text', $request->banner_text);
 
-        return back()->with('success', 'Настройки сохранены.');
+        return back()->with('success', __('alert.settings_saved'));
     }
 
 

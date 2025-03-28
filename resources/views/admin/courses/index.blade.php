@@ -5,6 +5,18 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold mb-0">{{ __('admin.list_course') }}</h2>
         </div>
+        {{-- Блок уведомлений --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <div class="table-responsive shadow-sm rounded bg-white p-3">
             <table class="table table-hover align-middle mb-0">
