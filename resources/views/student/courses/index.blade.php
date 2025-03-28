@@ -55,8 +55,8 @@
     <section id="courses" class="courses section py-5 bg-gray-50">
         <!-- Заголовок секции -->
         <div class="container section-title text-center mb-5" data-aos="fade-up">
-            <h2>Наши курсы</h2>
-            <p>Популярные направления обучения</p>
+            <h2>{{ __('main.our_courses') }}</h2>
+            <p>{{ __('main.popular_courses') }}</p>
         </div>
 
         <div class="container">
@@ -66,7 +66,7 @@
                         <div class="course-item w-100 d-flex flex-column">
                             <img src="{{ asset('storage/' . $course->image) }}"
                                  class="course-img"
-                                 alt="Изображение курса">
+                                 alt="{{ __('main.course_image') }}">
 
                             <div class="course-content p-4 flex-grow-1 d-flex flex-column justify-content-between">
                                 <div>

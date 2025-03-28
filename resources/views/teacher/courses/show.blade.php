@@ -16,8 +16,8 @@
         <nav class="breadcrumbs mt-3">
             <div class="container">
                 <ol class="breadcrumb bg-transparent p-0">
-                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Главная</a></li>
-                    <li class="breadcrumb-item active">Курс преподавателя</li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">{{ __('teacher.show.breadcrumbs.home') }}</a></li>
+                    <li class="breadcrumb-item active">{{ __('teacher.show.breadcrumbs.course') }}</li>
                 </ol>
             </div>
         </nav>
@@ -26,7 +26,7 @@
     <!-- Кнопка перехода к студентам -->
     <div class="container mt-4 text-end">
         <a href="{{ route('teacher.courses.students', $course->id) }}" class="btn btn-outline-secondary btn-sm">
-            👥 Студенты курса
+            {{ __('teacher.show.students_btn') }}
         </a>
     </div>
 
@@ -43,15 +43,15 @@
                 <div class="col-lg-4">
                     <div class="bg-light p-3 rounded shadow-sm">
                         <div class="mb-2 d-flex justify-content-between">
-                            <span class="fw-medium">Преподаватель:</span>
-                            <span>{{ $course->user->name ?? 'Без имени' }}</span>
+                            <span class="fw-medium">{{ __('teacher.show.teacher') }}</span>
+                            <span>{{ $course->user->name ?? __('teacher.show.no_name') }}</span>
                         </div>
                         <div class="mb-2 d-flex justify-content-between">
-                            <span class="fw-medium">Категория:</span>
-                            <span>{{ $course->category->name ?? 'Без категории' }}</span>
+                            <span class="fw-medium">{{ __('teacher.show.category') }}</span>
+                            <span>{{ $course->category->name ?? __('teacher.show.no_category') }}</span>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <span class="fw-medium">Стоимость:</span>
+                            <span class="fw-medium">{{ __('teacher.show.price') }}</span>
                             <span class="text-success fw-bold">{{ $course->price }} ₸</span>
                         </div>
                     </div>
@@ -90,7 +90,7 @@
                                         <div class="col-md-5">
                                             <video controls class="rounded shadow-sm w-100">
                                                 <source src="{{ asset('storage/' . $lesson->video) }}" type="video/mp4">
-                                                Ваш браузер не поддерживает видео.
+                                                {{ __('teacher.show.video_not_supported') }}
                                             </video>
                                         </div>
                                     @endif
@@ -105,7 +105,7 @@
 
                                         <a href="{{ route('lessons.show', $lesson->id) }}"
                                            class="btn btn-outline-primary btn-sm">
-                                            ✏️ Добавить/изменить задание
+                                            {{ __('teacher.show.add_assignment_btn') }}
                                         </a>
                                     </div>
                                 </div>

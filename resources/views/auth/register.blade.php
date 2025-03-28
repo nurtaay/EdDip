@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Регистрация')
+@section('title', __('main.register_title'))
 
 @section('content')
     <div class="container py-5">
@@ -8,13 +8,13 @@
             <div class="col-md-6 col-lg-5">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
-                        <h4 class="mb-4 text-center fw-bold">Регистрация</h4>
+                        <h4 class="mb-4 text-center fw-bold">{{ __('main.register_heading') }}</h4>
 
                         <form method="POST" action="{{ route('register') }}">
                             @csrf
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Имя</label>
+                                <label for="name" class="form-label">{{ __('main.name') }}</label>
                                 <input id="name" type="text"
                                        class="form-control @error('name') is-invalid @enderror"
                                        name="name" value="{{ old('name') }}"
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
+                                <label for="email" class="form-label">{{ __('main.email') }}</label>
                                 <input id="email" type="email"
                                        class="form-control @error('email') is-invalid @enderror"
                                        name="email" value="{{ old('email') }}"
@@ -36,7 +36,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">Пароль</label>
+                                <label for="password" class="form-label">{{ __('main.password') }}</label>
                                 <input id="password" type="password"
                                        class="form-control @error('password') is-invalid @enderror"
                                        name="password" required autocomplete="new-password">
@@ -46,7 +46,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="password-confirm" class="form-label">Подтверждение пароля</label>
+                                <label for="password-confirm" class="form-label">{{ __('main.password_confirm') }}</label>
                                 <input id="password-confirm" type="password"
                                        class="form-control" name="password_confirmation"
                                        required autocomplete="new-password">
@@ -54,7 +54,7 @@
 
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-success">
-                                    Зарегистрироваться
+                                    {{ __('main.register') }}
                                 </button>
                             </div>
                         </form>
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <small>Уже есть аккаунт? <a href="{{ route('login') }}">Войти</a></small>
+                    <small>{{ __('main.have_account') }} <a href="{{ route('login') }}">{{ __('main.login') }}</a></small>
                 </div>
             </div>
         </div>

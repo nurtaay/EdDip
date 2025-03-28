@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Добавить урок')
+@section('title', __('lesson.add_lesson')) {{-- create.blade --}}
 
 @section('content')
     <div class="container py-5">
 
         <!-- Заголовок -->
         <div class="mb-4">
-            <h2 class="fw-bold">Новый урок</h2>
-            <p class="text-muted">Заполните форму ниже, чтобы добавить новый урок в курс</p>
+            <h2 class="fw-bold">{{ __('lesson.new_lesson') }}</h2>
+            <p class="text-muted">{{ __('lesson.fill_form_to_add') }}</p>
         </div>
 
         <!-- Форма -->
@@ -16,30 +16,30 @@
             @csrf
 
             <div class="mb-3">
-                <label class="form-label fw-medium">Название урока</label>
-                <input type="text" name="title" class="form-control" placeholder="Например: Введение в тему" required>
+                <label class="form-label fw-medium">{{ __('lesson.lesson_title') }}</label>
+                <input type="text" name="title" class="form-control" placeholder="{{ __('lesson.title_placeholder') }}" required>
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-medium">Описание / содержание</label>
-                <textarea name="content" class="form-control" rows="4" placeholder="Краткое содержание или план урока..."></textarea>
+                <label class="form-label fw-medium">{{ __('lesson.lesson_content') }}</label>
+                <textarea name="content" class="form-control" rows="4" placeholder="{{ __('lesson.content_placeholder') }}"></textarea>
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-medium">Видео (MP4, MOV, AVI, WMV)</label>
+                <label class="form-label fw-medium">{{ __('lesson.lesson_video') }}</label>
                 <input type="file" name="video" class="form-control" accept="video/*">
-                <small class="text-muted">Рекомендуемый формат: MP4. Размер до 500 МБ.</small>
+                <small class="text-muted">{{ __('lesson.video_format_info') }}</small>
             </div>
 
             <div class="form-check form-switch mb-4">
                 <input class="form-check-input" type="checkbox" name="is_preview" id="is_preview" {{ old('is_preview') ? 'checked' : '' }}>
                 <label class="form-check-label" for="is_preview">
-                    Сделать урок доступным для всех (превью)
+                    {{ __('lesson.preview_toggle') }}
                 </label>
             </div>
 
             <div class="d-grid">
-                <button type="submit" class="btn btn-success">Сохранить урок</button>
+                <button type="submit" class="btn btn-success">{{ __('lesson.save_lesson') }}</button>
             </div>
         </form>
 

@@ -154,10 +154,10 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
-    'languages' => [
-        'kz' => 'kz',
-        'ru' => 'ru',
-    ],
+//    'languages' => [
+//        'kz' => 'kz',
+//        'ru' => 'ru',
+//    ],
 
     'providers' => [
 

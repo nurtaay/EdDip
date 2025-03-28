@@ -6,44 +6,41 @@
             <div class="col-lg-4 col-md-6">
                 <div class="stats-item text-center w-100 h-100">
                     <span data-purecounter-start="0" data-purecounter-end="{{ $studentsCount }}" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Students</p>
+                    <p>{{ __('main.students') }}</p>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6">
                 <div class="stats-item text-center w-100 h-100">
                     <span data-purecounter-start="0" data-purecounter-end="{{ $coursesCount }}" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Courses</p>
+                    <p>{{ __('main.courses') }}</p>
                 </div>
             </div>
 
             <div class="col-lg-4 col-md-6">
                 <div class="stats-item text-center w-100 h-100">
                     <span data-purecounter-start="0" data-purecounter-end="{{ $teachersCount }}" data-purecounter-duration="1" class="purecounter"></span>
-                    <p>Teachers</p>
+                    <p>{{ __('main.teachers') }}</p>
                 </div>
             </div>
-
         </div>
     </div>
 </section>
-
 <!-- /Counts Section -->
 
 <!-- Why Us Section -->
-
 <section id="why-us" class="section py-5 bg-gradient-to-b from-white to-blue-50">
     <div class="container">
         <div class="row gy-4">
 
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
                 <div class="bg-gradient-to-br from-blue-100 to-blue-200 text-gray-800 rounded-xl shadow-md p-4 h-100 d-flex flex-column justify-content-between">
-                    <h3 class="text-xl font-semibold mb-3">Почему выбирают нас?</h3>
+                    <h3 class="text-xl font-semibold mb-3">{{ __('main.why_us_heading') }}</h3>
                     <p class="text-sm">
-                        Мы предлагаем современные методы обучения, гибкий подход и постоянную поддержку. Образование должно быть не только полезным, но и вдохновляющим.
+                        {{ __('main.why_us_desc') }}
                     </p>
                     <div class="text-center mt-auto">
-                        <a href="#" class="inline-block mt-4 text-blue-900 hover:underline font-medium">Узнать больше →</a>
+                        <a href="#" class="inline-block mt-4 text-blue-900 hover:underline font-medium">{{ __('main.learn_more') }} →</a>
                     </div>
                 </div>
             </div>
@@ -53,30 +50,28 @@
 
                     <div class="col-xl-4">
                         <div class="rounded-xl shadow bg-white border-l-4 border-blue-400 p-4 text-center h-100 hover:shadow-md transition">
-                            <h4 class="text-lg font-semibold text-blue-800 mb-2">Актуальные знания</h4>
-                            <p class="text-sm text-gray-700">Наши курсы обновляются в соответствии с последними трендами в образовании.</p>
+                            <h4 class="text-lg font-semibold text-blue-800 mb-2">{{ __('main.feature_1_title') }}</h4>
+                            <p class="text-sm text-gray-700">{{ __('main.feature_1_desc') }}</p>
                         </div>
                     </div>
 
                     <div class="col-xl-4">
                         <div class="rounded-xl shadow bg-white border-l-4 border-green-400 p-4 text-center h-100 hover:shadow-md transition">
-                            <h4 class="text-lg font-semibold text-green-800 mb-2">Профессиональные преподаватели</h4>
-                            <p class="text-sm text-gray-700">Опытные специалисты помогут вам освоить знания доступно и эффективно.</p>
+                            <h4 class="text-lg font-semibold text-green-800 mb-2">{{ __('main.feature_2_title') }}</h4>
+                            <p class="text-sm text-gray-700">{{ __('main.feature_2_desc') }}</p>
                         </div>
                     </div>
 
                     <div class="col-xl-4">
                         <div class="rounded-xl shadow bg-white border-l-4 border-purple-400 p-4 text-center h-100 hover:shadow-md transition">
-                            <h4 class="text-lg font-semibold text-purple-800 mb-2">Поддержка на каждом шаге</h4>
-                            <p class="text-sm text-gray-700">Мы всегда рядом, чтобы вы могли чувствовать уверенность в процессе обучения.</p>
+                            <h4 class="text-lg font-semibold text-purple-800 mb-2">{{ __('main.feature_3_title') }}</h4>
+                            <p class="text-sm text-gray-700">{{ __('main.feature_3_desc') }}</p>
                         </div>
                     </div>
 
                 </div>
             </div>
-
         </div>
     </div>
 </section>
-
 <!-- /Why Us Section -->

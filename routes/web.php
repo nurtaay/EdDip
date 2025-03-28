@@ -23,15 +23,15 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('lang/{lang}',[HomeController::class, 'switchLang'])->name('lang.switch');
 
 
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('lang/{lang}',[HomeController::class, 'switchLang'])->name('lang.switch');
 Auth::routes();
 Route::middleware(['auth', 'web'])->group(function () {
+
     Route::get('/courses/{id}/grade', [CourseController::class, 'calculateFinalGradeForStudent'])
         ->middleware('auth')
         ->name('student.courses.final-grade');

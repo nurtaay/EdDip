@@ -9,6 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+
         $coursesCount = Course::count();
         $studentsCount = User::where('role', 'user')->count();
         $teachersCount = User::where('role', 'teacher')->count();
@@ -17,10 +18,12 @@ class HomeController extends Controller
         return view('home', compact('courses', 'coursesCount', 'studentsCount', 'teachersCount'));
     }
 
-    public function switchLang(Request $request, $lang){
-        if(array_key_exists($lang, config('app.languages'))){
-            $request->session()->put('mylocale', $lang);
+    public function switchLang(Request $request, $lang)
+    {
+        if (in_array($lang, ['ru', 'kz'])) {
+            $request->session()->put('locale', $lang);
         }
         return back();
     }
+
 }

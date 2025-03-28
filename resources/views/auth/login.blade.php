@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Вход')
+@section('title', __('main.login_title'))
 
 @section('content')
     <div class="container py-5">
@@ -8,13 +8,13 @@
             <div class="col-md-6 col-lg-5">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body p-4">
-                        <h4 class="mb-4 text-center fw-bold">Войти в аккаунт</h4>
+                        <h4 class="mb-4 text-center fw-bold">{{ __('main.login_heading') }}</h4>
 
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
 
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
+                                <label for="email" class="form-label">{{ __('main.email') }}</label>
                                 <input id="email" type="email"
                                        class="form-control @error('email') is-invalid @enderror"
                                        name="email" value="{{ old('email') }}"
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="password" class="form-label">Пароль</label>
+                                <label for="password" class="form-label">{{ __('main.password') }}</label>
                                 <input id="password" type="password"
                                        class="form-control @error('password') is-invalid @enderror"
                                        name="password" required autocomplete="current-password">
@@ -38,20 +38,20 @@
                                 <input class="form-check-input" type="checkbox" name="remember"
                                        id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="form-check-label" for="remember">
-                                    Запомнить меня
+                                    {{ __('main.remember_me') }}
                                 </label>
                             </div>
 
                             <div class="d-grid">
                                 <button type="submit" class="btn btn-primary">
-                                    Войти
+                                    {{ __('main.login') }}
                                 </button>
                             </div>
 
                             @if (Route::has('password.request'))
                                 <div class="mt-3 text-center">
                                     <a href="{{ route('password.request') }}" class="small text-decoration-none">
-                                        Забыли пароль?
+                                        {{ __('main.forgot_password') }}
                                     </a>
                                 </div>
                             @endif
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <small>Нет аккаунта? <a href="{{ route('register') }}">Зарегистрироваться</a></small>
+                    <small>{{ __('main.no_account') }} <a href="{{ route('register') }}">{{ __('main.register') }}</a></small>
                 </div>
             </div>
         </div>
