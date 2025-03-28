@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <h1>Список пользователей</h1>
-        <a href="{{ route('admin.user.create') }}" class="btn btn-primary mb-3">Добавить пользователя</a>
+        <h1>{{ __('admin.list_users') }}</h1>
+        <a href="{{ route('admin.user.create') }}" class="btn btn-primary mb-3">{{ __('admin.add_user') }}</a>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -12,11 +12,11 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Имя</th>
-                <th>Email</th>
-                <th>Роль</th>
-                <th>Действия</th>
+                <th>{{ __('admin.id') }}</th>
+                <th>{{ __('admin.name') }}</th>
+                <th>{{ __('admin.email') }}</th>
+                <th>{{ __('admin.role') }}</th>
+                <th>{{ __('admin.actions') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -27,11 +27,11 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role }}</td>
                     <td>
-                        <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-warning btn-sm">Изменить</a>
+                        <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-warning btn-sm">{{ __('admin.edit') }}</a>
                         <form action="{{ route('admin.user.delete', $user->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Удалить</button>
+                            <button type="submit" class="btn btn-danger btn-sm">{{ __('admin.delete') }}</button>
                         </form>
                     </td>
                 </tr>

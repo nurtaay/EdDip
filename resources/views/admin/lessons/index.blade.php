@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="mb-4">Lessons</h1>
+        <h1 class="mb-4">{{ __('admin.lessons') }}</h1>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -15,11 +15,11 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Title</th>
-                    <th>Content</th>
-                    <th>Course</th>
-                    <th>Video</th>
-                    <th>Actions</th>
+                    <th>{{ __('admin.title') }}</th>
+                    <th>{{ __('admin.content') }}</th>
+                    <th>{{ __('admin.course') }}</th>
+                    <th>{{ __('admin.video') }}</th>
+                    <th>{{ __('admin.actions') }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -31,7 +31,7 @@
                         <td>{{ $lesson->course->title ?? 'N/A' }}</td>
                         <td>
                             @if($lesson->video)
-                                <a href="{{ asset('storage/' . $lesson->video) }}" target="_blank">Watch Video</a>
+                                <a href="{{ asset('storage/' . $lesson->video) }}" target="_blank">{{ __('admin.watch_video') }}</a>
                             @else
                                 N/A
                             @endif
@@ -40,7 +40,7 @@
                             <form action="{{ route('admin.lessons.destroy', $lesson->id) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this lesson?')">Delete</button>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this lesson?')">{{ __('admin.delete') }}</button>
                             </form>
                         </td>
                     </tr>

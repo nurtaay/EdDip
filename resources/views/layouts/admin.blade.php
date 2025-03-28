@@ -34,23 +34,23 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('home') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
+                <span>{{ __('admin.layout.dashboard') }}</span></a>
         </li>
         <hr class="sidebar-divider">
         <div class="sidebar-heading">
-            Interface
+            {{ __('admin.layout.interface') }}
         </div>
         <li class="nav-item active">
             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
                aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
-                <span>Management</span>
+                <span>{{ __('admin.layout.management') }}</span>
             </a>
             <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item active" href="{{ route('admin.users') }}">Users</a>
-{{--                    <a class="collapse-item" href="cards.html">Cards</a>--}}
+                    <a class="collapse-item active" href="{{ route('admin.users') }}">{{ __('admin.layout.users') }}</a>
+{{--                    <a class="collapse-item" href="cards.html">{{ __('admin.layout.cards') }}</a>--}}
                 </div>
             </div>
         </li>
@@ -58,20 +58,20 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-wrench"></i>
-                <span>Utilities</span>
+                <span>{{ __('admin.layout.utilities') }}</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                  data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Utilities:</h6>
-                    <a class="collapse-item" href="{{ route('admin.admincourses') }}">Courses</a>
-                    <a class="collapse-item" href="{{ route('admin.adminlessons') }}">Lessons</a>
+                    <a class="collapse-item" href="{{ route('admin.admincourses') }}">{{ __('admin.layout.courses') }}</a>
+                    <a class="collapse-item" href="{{ route('admin.adminlessons') }}">{{ __('admin.layout.lessons') }}</a>
 {{--                    <a class="collapse-item" href="{{ route('admin.dashboards') }}">Subs</a>--}}
-                    <a class="collapse-item" href="{{ route('admin.subscriptions') }}">Subs</a>
-                    <a class="collapse-item" href="{{ route('admin.categories') }}">Categories</a>
-                    <a class="collapse-item" href="{{ route('admin.activity') }}">Activity</a>
-                    <a class="collapse-item" href="{{ route('admin.settings') }}">Setting</a>
-                    <a class="collapse-item" href="{{ route('pending') }}">Courses Check</a>
+                    <a class="collapse-item" href="{{ route('admin.subscriptions') }}">{{ __('admin.layout.subs') }}</a>
+                    <a class="collapse-item" href="{{ route('admin.categories') }}">{{ __('admin.layout.categories') }}</a>
+                    <a class="collapse-item" href="{{ route('admin.activity') }}">{{ __('admin.layout.activity') }}</a>
+                    <a class="collapse-item" href="{{ route('admin.settings') }}">{{ __('admin.layout.settings') }}</a>
+                    <a class="collapse-item" href="{{ route('pending') }}">{{ __('admin.layout.courses_check') }}</a>
                 </div>
             </div>
         </li>
@@ -85,7 +85,7 @@
                 <form
                     class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                        <input type="text" class="form-control bg-light border-0 small" placeholder="{{ __('admin.layout.search_placeholder') }}"
                                aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button">
@@ -94,15 +94,15 @@
                         </div>
                     </div>
                 </form>
-{{--                <div class="dropdown">--}}
-{{--                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">--}}
-{{--                        🌐 {{ strtoupper(app()->getLocale()) }}--}}
-{{--                    </button>--}}
-{{--                    <ul class="dropdown-menu">--}}
-{{--                        <li><a class="dropdown-item {{ app()->getLocale() === 'ru' ? 'active' : '' }}" href="{{ route('lang.switch', 'ru') }}">🇷🇺 Русский</a></li>--}}
-{{--                        <li><a class="dropdown-item {{ app()->getLocale() === 'kz' ? 'active' : '' }}" href="{{ route('lang.switch', 'kz') }}">🇰🇿 Қазақша</a></li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
+                <div class="dropdown">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        🌐 {{ strtoupper(app()->getLocale()) }}
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item {{ app()->getLocale() === 'ru' ? 'active' : '' }}" href="{{ route('lang.switch', 'ru') }}">🇷🇺 Русский</a></li>
+                        <li><a class="dropdown-item {{ app()->getLocale() === 'kz' ? 'active' : '' }}" href="{{ route('lang.switch', 'kz') }}">🇰🇿 Қазақша</a></li>
+                    </ul>
+                </div>
                 <li class="list-group">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,9 +113,9 @@
 
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                          aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="{{ route('admin.profile') }}">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Profile
+                            {{ __('admin.layout.profile') }}
                         </a>
 {{--                        <a class="dropdown-item" href="#">--}}
 {{--                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>--}}
@@ -126,10 +126,15 @@
 {{--                            Activity Log--}}
 {{--                        </a>--}}
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+
+                        <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                            Logout
+                            {{ __('admin.layout.logout') }}
                         </a>
+
                     </div>
                 </li>
             </nav>
@@ -143,7 +148,7 @@
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
                 <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
+                    <span>{{ __('admin.layout.copyright') }}</span>
                 </div>
             </div>
         </footer>
@@ -162,10 +167,13 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">{{ __('admin.layout.select_logout') }}</div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="login.html">Logout</a>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">{{ __('admin.layout.cancel') }}</button>
+                <a class="btn btn-primary" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    {{ __('admin.layout.logout') }}
+                </a>
+
             </div>
         </div>
     </div>

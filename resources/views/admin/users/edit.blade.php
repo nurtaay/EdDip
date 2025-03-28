@@ -2,19 +2,19 @@
 
 @section('content')
     <div class="container">
-        <h1>Изменить роль пользователя</h1>
+        <h1>{{ __('admin.change_role') }}</h1>
 
         <form action="{{ route('admin.user.update', $user->id) }}" method="POST">
             @csrf
             @method('PUT')
 
             <div class="mb-3">
-                <label for="name" class="form-label">Имя</label>
+                <label for="name" class="form-label">{{ __('admin.name') }}</label>
                 <input type="text" class="form-control" value="{{ $user->name }}" disabled>
             </div>
 
             <div class="mb-3">
-                <label for="role" class="form-label">Роль</label>
+                <label for="role" class="form-label">{{ __('admin.role') }}</label>
                 <select name="role" class="form-control">
                     <option value="user" {{ $user->role == 'user' ? 'selected' : '' }}>User</option>
                     <option value="teacher" {{ $user->role == 'teacher' ? 'selected' : '' }}>Teacher</option>
@@ -22,7 +22,7 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-success">Сохранить</button>
+            <button type="submit" class="btn btn-success">{{ __('admin.save') }}</button>
         </form>
     </div>
 @endsection
