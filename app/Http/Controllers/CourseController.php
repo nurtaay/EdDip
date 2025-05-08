@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Assignment;
+use App\Models\Category;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,8 +43,9 @@ class CourseController extends Controller
     }
 
 
-    public function indexstud()
+    public function indexstud(Request $request)
     {
+
         $courses = Course::where('status', 'approved')->with('category')->latest()->get();
         return view('student.courses.index', compact('courses'));
     }

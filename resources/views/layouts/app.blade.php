@@ -61,20 +61,31 @@
                 </div>
 
                 @auth
-                    <li class="dropdown"><a href="#"><span>{{ auth()->user()->name }} | {{ auth()->user()->role }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <li class="dropdown">
+                        <a href="#"><span>{{ auth()->user()->name }} | {{ auth()->user()->role }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>
-                            <li><a href="{{ route('profile.show') }}">{{ __('main.profile') }}</a></li>
+                            <li>
+                                <a href="{{ route('profile.show') }}">{{ __('main.profile') }}</a>
+                            </li>
+
                             @if(auth()->user()->isStudent())
-                                <li><a href="{{ route('student.courses.my') }}">{{ __('main.my_courses') }}</a></li>
+                                <li>
+                                    <a href="{{ route('student.courses.my') }}">{{ __('main.my_courses') }}</a>
+                                </li>
                             @endif
+
                             @if(auth()->user()->isAdmin())
-                                <li><a href="{{ route('admin.users') }}">{{ __('main.admin') }}</a></li>
+                                <li>
+                                    <a href="{{ route('admin.users') }}">{{ __('main.admin') }}</a>
+                                </li>
                             @endif
 
                             <li>
-                                <form method="POST" action="{{ route('logout') }}">
+                                <form method="POST" action="{{ route('logout') }}" class="m-0 p-0">
                                     @csrf
-                                    <button type="submit" class="dropdown-item border-0 bg-transparent p-0" style="color: #000; cursor: pointer;">
+                                    <button type="submit"
+                                            class="w-100 text-start bg-transparent border-0 dropdown-item"
+                                            style="padding: 8px 16px; font-size: 14px; color: #ec1212;">
                                         {{ __('main.logout') }}
                                     </button>
                                 </form>
@@ -82,6 +93,7 @@
                         </ul>
                     </li>
                 @endauth
+
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>

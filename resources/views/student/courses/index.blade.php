@@ -1,5 +1,69 @@
 @section('card')
     <style>
+        .filter-section form {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .filter-section .form-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .filter-section input,
+        .filter-section select {
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 0.9rem;
+            background-color: #fff;
+            width: 230px;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .filter-section input:focus,
+        .filter-section select:focus {
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.25);
+            outline: none;
+        }
+
+        .filter-section .btn-apply {
+            background-color: #2563eb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-section .btn-apply:hover {
+            background-color: #1e40af;
+        }
+
+        .filter-section .btn-reset {
+            background-color: transparent;
+            color: #6b7280;
+            border: 1px solid #d1d5db;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-section .btn-reset:hover {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
         .course-img {
             width: 100%;
             height: 220px;
@@ -50,9 +114,19 @@
             font-size: 1rem;
             color: #6b7280;
         }
+
+        .filter-section {
+            margin-bottom: 30px;
+        }
+
+        .filter-section select,
+        .filter-section input {
+            margin-right: 10px;
+        }
     </style>
 
     <section id="courses" class="courses section py-5 bg-gray-50">
+
         <!-- Заголовок секции -->
         <div class="container section-title text-center mb-5" data-aos="fade-up">
             <h2>{{ __('main.our_courses') }}</h2>
@@ -60,32 +134,91 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                @foreach($courses as $course)
-                    <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-                        <div class="course-item w-100 d-flex flex-column">
-                            <img src="{{ asset('storage/' . $course->image) }}"
-                                 class="course-img"
-                                 alt="{{ __('main.course_image') }}">
 
-                            <div class="course-content p-4 flex-grow-1 d-flex flex-column justify-content-between">
-                                <div>
-                                    <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <p class="category mb-0">{{ $course->category->name }}</p>
-                                        <p class="price mb-0">{{ $course->price }} ₸</p>
+            <!-- 🔍 Поиск и фильтрация -->
+            <div class="filter-section mb-4" data-aos="fade-up">
+                <form method="GET" action="{{ route('home') }}#courses" class="d-flex flex-wrap align-items-end">
+                    <div class="me-2 mb-2">
+                        <label for="search" class="form-label">{{ __('main.search') }}</label>
+                        <input type="text" name="search" id="search" class="form-control"
+                               value="{{ request('search') }}" placeholder="{{ __('main.search_placeholder') }}">
+                    </div>
+
+                    <div class="me-2 mb-2">
+                        <label for="min_price" class="form-label">{{ __('main.min_price') }}</label>
+                        <input type="number" name="min_price" id="min_price" class="form-control"
+                               value="{{ request('min_price') }}" placeholder="0">
+                    </div>
+
+                    <div class="me-2 mb-2">
+                        <label for="max_price" class="form-label">{{ __('main.max_price') }}</label>
+                        <input type="number" name="max_price" id="max_price" class="form-control"
+                               value="{{ request('max_price') }}" placeholder="999999">
+                    </div>
+
+                    <div class="me-2 mb-2">
+                        <label for="sort_by" class="form-label">{{ __('main.sort_by') }}</label>
+                        <select name="sort_by" id="sort_by" class="form-select">
+                            <option value="">{{ __('main.choose_sort') }}</option>
+                            <option value="newest" {{ request('sort_by') == 'newest' ? 'selected' : '' }}>
+                                {{ __('main.newest') }}
+                            </option>
+                            <option value="oldest" {{ request('sort_by') == 'oldest' ? 'selected' : '' }}>
+                                {{ __('main.oldest') }}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="mb-2 me-2">
+                        <button type="submit" class="btn-apply">
+                            {{ __('main.apply_filters') }}
+                        </button>
+                    </div>
+
+                    @if(request()->hasAny(['search', 'min_price', 'max_price', 'sort_by']))
+                        <a href="{{ route('home') }}" class="btn-reset">
+                            {{ __('main.reset_filters') }}
+                        </a>
+                    @endif
+                </form>
+            </div>
+
+            <!-- Курсы -->
+            <div class="row">
+                @if($courses->count())
+                    @foreach($courses as $course)
+                        <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                            <div class="course-item w-100 d-flex flex-column">
+                                <img src="{{ asset('storage/' . $course->image) }}"
+                                     class="course-img"
+                                     alt="{{ __('main.course_image') }}">
+
+                                <div class="course-content p-4 flex-grow-1 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <p class="category mb-0">{{ $course->category->name }}</p>
+                                            <p class="price mb-0">{{ $course->price }} ₸</p>
+                                        </div>
+                                        <h5 class="mb-2">
+                                            <a href="{{ route('student.courses.show', $course->id) }}">
+                                                {{ $course->title }}
+                                            </a>
+                                        </h5>
+                                        <p class="description text-muted mb-3">{{ Str::limit($course->description, 100) }}</p>
                                     </div>
-                                    <h5 class="mb-2">
-                                        <a href="{{ route('student.courses.show', $course->id) }}">
-                                            {{ $course->title }}
-                                        </a>
-                                    </h5>
-                                    <p class="description text-muted mb-3">{{ Str::limit($course->description, 100) }}</p>
                                 </div>
                             </div>
                         </div>
+                    @endforeach
+                @else
+                    <div class="col-12">
+                        <div class="alert alert-warning text-center" role="alert">
+                            {{ __('main.no_courses_found') }}
+                        </div>
                     </div>
-                @endforeach
+                @endif
             </div>
         </div>
     </section>
+
 @endsection
