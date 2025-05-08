@@ -9,11 +9,31 @@ use App\Models\Lesson;
 use App\Models\Setting;
 use App\Models\Subscription;
 use App\Models\User;
+use App\Models\UserLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller{
+    public function log()
+    {
+        $logins = UserLogin::with('user')->orderBy('logged_in_at', 'desc')->paginate(20);
+
+        // Подготовка данных для диаграммы: количество логинов по дням
+        $loginStats = DB::table('user_logins')
+            ->select(DB::raw('DATE(logged_in_at) as date'), DB::raw('COUNT(*) as total'))
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        $chartLabels = $loginStats->pluck('date')->map(function ($date) {
+            return \Carbon\Carbon::parse($date)->format('d.m');
+        })->toArray();
+
+        $chartData = $loginStats->pluck('total')->toArray();
+
+        return view('admin.logins.index', compact('logins', 'chartLabels', 'chartData'));
+    }
     public function categories()
     {
         $categories = Category::all();

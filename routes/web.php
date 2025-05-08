@@ -75,6 +75,8 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 Route::middleware(['role:admin'])->group(function () {
+    Route::get('/logins', [AdminController::class, 'log'])->name('admin.logins.index');
+
     Route::get('admin/profile', [AdminProfile::class, 'edit'])->name('admin.profile');
     Route::post('admin/profile/update', [AdminProfile::class, 'update'])->name('admin.profile.update');
     Route::post('admin/profile/password', [AdminProfile::class, 'updatePassword'])->name('admin.profile.password');

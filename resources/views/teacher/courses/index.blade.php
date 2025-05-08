@@ -13,6 +13,7 @@
 
         <div class="row g-4">
             @foreach($courses as $course)
+                @if($course->teacher_id === auth()->id())
                 <div class="col-md-6 col-lg-4">
                     <div class="card border-0 shadow-sm h-100">
                         <div class="position-relative">
@@ -42,6 +43,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             @endforeach
         </div>
     </div>
