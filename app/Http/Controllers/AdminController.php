@@ -69,17 +69,39 @@ class AdminController extends Controller{
         if ($filter === 'active') {
             $query->where('status', 'active')->where('end_date', '>=', now());
         } elseif ($filter === 'expired') {
-            $query->where('status', 'expired')->orWhere('end_date', '<', now());
+            $query->where(function($q) {
+                $q->where('status', 'expired')->orWhere('end_date', '<', now());
+            });
         }
 
         $subscriptions = $query->latest()->get();
 
+        // Доход от активных
         $totalRevenue = Subscription::where('status', 'active')
             ->where('end_date', '>=', now())
             ->join('plans', 'subscriptions.type', '=', 'plans.type')
             ->sum('plans.price');
 
-        return view('admin.subscriptions', compact('subscriptions', 'filter', 'totalRevenue'));
+        //  Данные для диаграммы
+        $typeStats = Subscription::select('type', DB::raw('count(*) as total'))
+            ->groupBy('type')
+            ->get();
+
+        $typeLabels = $typeStats->pluck('type');
+        $typeCounts = $typeStats->pluck('total');
+
+        $revenueByType = DB::table('subscriptions')
+            ->join('plans', 'subscriptions.type', '=', 'plans.type')
+            ->select('subscriptions.type', DB::raw('SUM(plans.price) as revenue'))
+            ->groupBy('subscriptions.type')
+            ->get();
+
+        $revenueLabels = $revenueByType->pluck('type');
+        $revenueValues = $revenueByType->pluck('revenue');
+
+        return view('admin.subscriptions', compact(
+            'subscriptions', 'filter', 'totalRevenue', 'typeLabels', 'typeCounts', 'revenueLabels', 'revenueValues'
+        ));
     }
 
     public function cancelSubscription($id)
