@@ -35,7 +35,7 @@ class Course extends Model
 
     public function students()
     {
-        return $this->belongsToMany(User::class, 'course_user')->withTimestamps();
+        return $this->belongsToMany(User::class, 'course_user')->withPivot('is_completed')->withTimestamps();
     }
 
 }

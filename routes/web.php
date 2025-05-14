@@ -42,6 +42,8 @@ Route::get('/gd-check', fn() => extension_loaded('gd') ? 'GD OK âœ…' : 'NO GD â
 
 //Auth Users
 Route::middleware(['auth', 'web'])->group(function () {
+    Route::post('/courses/{course}/complete', [CourseController::class, 'complete'])
+        ->name('courses.complete');
     Route::get('/lessons/{lesson}/tests/create', [TestController::class, 'create'])->name('tests.create');
     Route::post('/lessons/{lesson}/tests', [TestController::class, 'store'])->name('tests.store');
 

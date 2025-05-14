@@ -60,6 +60,13 @@ class User extends Authenticatable
         return $this->role === 'user';
     }
 
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class)
+            ->withPivot('is_completed')
+            ->withTimestamps();
+    }
+
     public function purchasedCourses()
     {
         return $this->hasManyThrough(

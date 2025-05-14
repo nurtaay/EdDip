@@ -11,6 +11,24 @@ use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
+    public function complete(Course $course)
+    {
+        $user = Auth::user();
+
+        // Проверка: есть ли доступ
+        if (!$user->courses->contains($course->id)) {
+            abort(403);
+        }
+
+        $user->courses()->updateExistingPivot($course->id, [
+            'is_completed' => true,
+            'updated_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', __('main.course_completed'));
+    }
+
+
     // Display a listing of the courses.
     public function adminindex()
     {
@@ -71,7 +89,22 @@ class CourseController extends Controller
 //            });
 //        }
 
-        return view('student.courses.show', compact('course', 'isEnrolled'));
+        // ===== РАССЧИТЫВАЕМ ПРОГРЕСС =====
+        $lessonsWithTests = $course->lessons->filter(fn($lesson) => $lesson->test);
+        $total = $lessonsWithTests->count();
+
+        $passedTestIds = \App\Models\TestResult::where('user_id', auth()->id())
+            ->where('passed', true)
+            ->pluck('test_id');
+
+        $passed = $lessonsWithTests->filter(fn($lesson) =>
+            $lesson->test && $passedTestIds->contains($lesson->test->id)
+        )->count();
+
+        $progress = $total > 0 ? round(($passed / $total) * 100) : 0;
+
+
+        return view('student.courses.show', compact('course', 'isEnrolled', 'progress'));
     }
 
     public function enroll($id)
