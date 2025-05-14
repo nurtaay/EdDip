@@ -11,6 +11,12 @@ class Lesson extends Model
 
     protected $fillable = ['title', 'content', 'video', 'course_id', 'is_preview'];
 
+    public function test()
+    {
+        return $this->hasOne(Test::class);
+    }
+
+
     public function course()
     {
         return $this->belongsTo(Course::class)->where('status', 'approved');

@@ -48,7 +48,7 @@
 
         <nav id="navmenu" class="navmenu">
             <ul>
-                <li><a href="#" class="active">{{ __('main.home') }}<br></a></li>
+                <li><a href="{{ route('home') }}" class="active">{{ __('main.home') }}<br></a></li>
 
                 <div class="dropdown">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -119,6 +119,8 @@
     <div class="mt-4">
 {{--        @include('components.breadcrumbs')--}}
         @yield('content')
+
+        @yield('scripts')
     </div>
 
     @auth
@@ -174,7 +176,7 @@
 
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
+@stack('scripts')
 <!-- Preloader -->
 <div id="preloader"></div>
 

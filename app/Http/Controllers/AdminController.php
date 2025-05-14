@@ -273,17 +273,17 @@ class AdminController extends Controller{
             ->latest()
             ->get();
 
-        // 3. Оплаты
-        $payments = Subscription::with('user')
-            ->when($startDate, fn($q) => $q->whereDate('created_at', '>=', $startDate))
-            ->when($endDate, fn($q) => $q->whereDate('created_at', '<=', $endDate))
-            ->latest()
-            ->get();
-
-        return view('admin.activity', compact(
-            'courseRegistrations', 'submissions', 'payments',
-            'filterType', 'courseId', 'startDate', 'endDate', 'courses'
-        ));
+//        // 3. Оплаты
+//        $payments = Subscription::with('user')
+//            ->when($startDate, fn($q) => $q->whereDate('created_at', '>=', $startDate))
+//            ->when($endDate, fn($q) => $q->whereDate('created_at', '<=', $endDate))
+//            ->latest()
+//            ->get();
+//
+//        return view('admin.activity', compact(
+//            'courseRegistrations', 'submissions', 'payments',
+//            'filterType', 'courseId', 'startDate', 'endDate', 'courses'
+//        ));
     }
 
     public function settings()

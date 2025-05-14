@@ -60,13 +60,18 @@ class User extends Authenticatable
         return $this->role === 'user';
     }
 
-    public function hasActiveSubscription()
+    public function purchasedCourses()
     {
-        return $this->subscriptions()
-            ->where('status', 'active')
-            ->where('end_date', '>', now())
-            ->exists();
+        return $this->hasManyThrough(
+            \App\Models\Course::class,
+            \App\Models\CoursePurchase::class,
+            'user_id',
+            'id',
+            'id',
+            'course_id'
+        );
     }
+
 
     public function subscriptions()
     {
@@ -76,6 +81,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Course::class, 'course_user')->withTimestamps();
     }
+
+
 
 
 }

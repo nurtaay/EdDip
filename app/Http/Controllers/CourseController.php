@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 use App\Models\Category;
 use App\Models\Course;
+use App\Models\CoursePurchase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -58,18 +59,17 @@ class CourseController extends Controller
             ->with(['lessons', 'category', 'students']) // добавим сюда
             ->firstOrFail();
 
-        $isEnrolled = false;
-        if (auth()->check()) {
-            $isEnrolled = $course->students->contains(auth()->id());
-        }
+        $isEnrolled = CoursePurchase::where('user_id', auth()->id())
+            ->where('course_id', $course->id)
+            ->exists();
 
         // Если у пользователя нет подписки, показываем только превью-уроки
-        if (!auth()->check() || !auth()->user()->hasActiveSubscription()) {
-            // фильтруем только открытые уроки
-            $course->lessons = $course->lessons->filter(function ($lesson) {
-                return $lesson->is_preview;
-            });
-        }
+//        if (!auth()->check() || !auth()->user()->hasActiveSubscription()) {
+//            // фильтруем только открытые уроки
+//            $course->lessons = $course->lessons->filter(function ($lesson) {
+//                return $lesson->is_preview;
+//            });
+//        }
 
         return view('student.courses.show', compact('course', 'isEnrolled'));
     }
@@ -88,7 +88,7 @@ class CourseController extends Controller
     }
     public function myCourses()
     {
-        $courses = Auth::user()->enrolledCourses()->with('category')->get();
+        $courses = Auth::user()->purchasedCourses()->with('category')->get();
         return view('student.courses.my', compact('courses'));
     }
 

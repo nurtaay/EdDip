@@ -12,14 +12,14 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        $activeSub = $user->subscriptions()
-            ->where('status', 'active')
-            ->where('end_date', '>=', now())
-            ->latest('end_date')
-            ->first();
+//        $activeSub = $user->subscriptions()
+//            ->where('status', 'active')
+//            ->where('end_date', '>=', now())
+//            ->latest('end_date')
+//            ->first();
 
-        $allSubs = $user->subscriptions()->latest()->get();
-        return view('profile.show', compact('user', 'activeSub', 'allSubs'));
+//        $allSubs = $user->subscriptions()->latest()->get();
+        return view('profile.show', compact('user'));
     }
 
     public function update(Request $request)

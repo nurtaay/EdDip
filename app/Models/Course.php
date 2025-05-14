@@ -11,6 +11,8 @@ class Course extends Model
 
     protected $fillable = ['title', 'description', 'image', 'teacher_id', 'price', 'cat_id', 'status'];
 
+
+
     public function lessons()
     {
         return $this->hasMany(Lesson::class);

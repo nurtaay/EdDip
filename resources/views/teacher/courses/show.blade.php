@@ -9,7 +9,7 @@
             <div class="row d-flex justify-content-center text-center">
                 <div class="col-lg-8">
                     <h1 class="fw-bold">{{ $course->title }}</h1>
-                    <p class="mb-0 text-muted">{{ Str::limit($course->description, 150) }}</p>
+{{--                    <p class="mb-0 text-muted">{{ Str::limit($course->description, 150) }}</p>--}}
                 </div>
             </div>
         </div>
@@ -77,7 +77,6 @@
                         @endforeach
                     </ul>
                 </div>
-
                 <!-- Контент урока -->
                 <div class="col-lg-9 mt-4 mt-lg-0">
                     <div class="tab-content">
@@ -103,7 +102,7 @@
                                             {!! nl2br(e($lesson->content)) !!}
                                         </div>
 
-                                        <a href="{{ route('lessons.show', $lesson->id) }}"
+                                        <a href="{{ route('tests.create', $lesson->id) }}"
                                            class="btn btn-outline-primary btn-sm">
                                             {{ __('teacher.show.add_assignment_btn') }}
                                         </a>

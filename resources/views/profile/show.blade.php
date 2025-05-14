@@ -23,22 +23,22 @@
         </div>
 
         <!-- Статус подписки -->
-        <div class="card mb-4 border-0 shadow-sm">
-            <div class="card-body d-flex justify-content-between align-items-center py-3 px-4">
-                <div>
-                    <strong>{{ __('profile.subscription') }}:</strong>
-                    @if($activeSub)
-                        <span class="text-success fw-medium">{{ ucfirst($activeSub->type) }} ({{ __('profile.until_date', ['date' => $activeSub->end_date->format('d.m.Y')]) }})</span>
-                    @else
-                        <span class="text-muted">{{ __('profile.no_subscription') }}</span>
-                    @endif
-                </div>
-                <a href="{{ route('subscription.plans') }}"
-                   class="btn btn-{{ $activeSub ? 'outline-success' : 'primary' }} btn-sm">
-                    {{ $activeSub ? __('profile.renew') : __('profile.subscribe') }}
-                </a>
-            </div>
-        </div>
+{{--        <div class="card mb-4 border-0 shadow-sm">--}}
+{{--            <div class="card-body d-flex justify-content-between align-items-center py-3 px-4">--}}
+{{--                <div>--}}
+{{--                    <strong>{{ __('profile.subscription') }}:</strong>--}}
+{{--                    @if($activeSub)--}}
+{{--                        <span class="text-success fw-medium">{{ ucfirst($activeSub->type) }} ({{ __('profile.until_date', ['date' => $activeSub->end_date->format('d.m.Y')]) }})</span>--}}
+{{--                    @else--}}
+{{--                        <span class="text-muted">{{ __('profile.no_subscription') }}</span>--}}
+{{--                    @endif--}}
+{{--                </div>--}}
+{{--                <a href="{{ route('subscription.plans') }}"--}}
+{{--                   class="btn btn-{{ $activeSub ? 'outline-success' : 'primary' }} btn-sm">--}}
+{{--                    {{ $activeSub ? __('profile.renew') : __('profile.subscribe') }}--}}
+{{--                </a>--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
         <!-- Управление профилем -->
         <div class="row g-4">
@@ -93,43 +93,43 @@
         </div>
 
         <!-- История подписок -->
-        @if($allSubs->count())
-            <div class="card mt-5 border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="mb-3">{{ __('profile.subscription_history') }}</h5>
-                    <div class="table-responsive">
-                        <table class="table table-bordered align-middle mb-0">
-                            <thead class="table-light">
-                            <tr>
-                                <th>{{ __('profile.type') }}</th>
-                                <th>{{ __('profile.start_date') }}</th>
-                                <th>{{ __('profile.end_date') }}</th>
-                                <th>{{ __('profile.status') }}</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($allSubs as $sub)
-                                <tr>
-                                    <td>{{ ucfirst($sub->type) }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($sub->start_date)->format('d.m.Y') }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($sub->end_date)->format('d.m.Y') }}</td>
-                                    <td>
-                                        @if($sub->status === 'active')
-                                            <span class="badge bg-success">{{ __('profile.active') }}</span>
-                                        @elseif($sub->status === 'expired')
-                                            <span class="badge bg-danger">{{ __('profile.expired') }}</span>
-                                        @else
-                                            <span class="badge bg-secondary">{{ $sub->status }}</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        @endif
+{{--        @if($allSubs->count())--}}
+{{--            <div class="card mt-5 border-0 shadow-sm">--}}
+{{--                <div class="card-body">--}}
+{{--                    <h5 class="mb-3">{{ __('profile.subscription_history') }}</h5>--}}
+{{--                    <div class="table-responsive">--}}
+{{--                        <table class="table table-bordered align-middle mb-0">--}}
+{{--                            <thead class="table-light">--}}
+{{--                            <tr>--}}
+{{--                                <th>{{ __('profile.type') }}</th>--}}
+{{--                                <th>{{ __('profile.start_date') }}</th>--}}
+{{--                                <th>{{ __('profile.end_date') }}</th>--}}
+{{--                                <th>{{ __('profile.status') }}</th>--}}
+{{--                            </tr>--}}
+{{--                            </thead>--}}
+{{--                            <tbody>--}}
+{{--                            @foreach($allSubs as $sub)--}}
+{{--                                <tr>--}}
+{{--                                    <td>{{ ucfirst($sub->type) }}</td>--}}
+{{--                                    <td>{{ \Carbon\Carbon::parse($sub->start_date)->format('d.m.Y') }}</td>--}}
+{{--                                    <td>{{ \Carbon\Carbon::parse($sub->end_date)->format('d.m.Y') }}</td>--}}
+{{--                                    <td>--}}
+{{--                                        @if($sub->status === 'active')--}}
+{{--                                            <span class="badge bg-success">{{ __('profile.active') }}</span>--}}
+{{--                                        @elseif($sub->status === 'expired')--}}
+{{--                                            <span class="badge bg-danger">{{ __('profile.expired') }}</span>--}}
+{{--                                        @else--}}
+{{--                                            <span class="badge bg-secondary">{{ $sub->status }}</span>--}}
+{{--                                        @endif--}}
+{{--                                    </td>--}}
+{{--                                </tr>--}}
+{{--                            @endforeach--}}
+{{--                            </tbody>--}}
+{{--                        </table>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        @endif--}}
 
     </div>
 @endsection

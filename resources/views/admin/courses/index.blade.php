@@ -55,15 +55,15 @@
                             @endif
                         </td>
                         <td class="text-center">
-                            <a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-sm btn-outline-primary me-1">
-                                👁️
-                            </a>
+{{--                            <a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-sm btn-outline-primary me-1">--}}
+{{--                                {{__('admin.edit')}}--}}
+{{--                            </a>--}}
                             <form action="{{ route('admin.courses.destroy', $course->id) }}" method="POST" class="d-inline"
                                   onsubmit="return confirm('Удалить курс навсегда?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                    🗑️
+                                <button type="submit" class="border border-5 rounded btn btn-sm btn-danger">
+                                    {{__('admin.delete')}}
                                 </button>
                             </form>
                         </td>

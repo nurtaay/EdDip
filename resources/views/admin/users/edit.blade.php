@@ -34,7 +34,7 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-success">{{ __('admin.save') }}</button>
+            <button type="submit" class="btn btn-primary">{{ __('admin.save') }}</button>
         </form>
     </div>
 @endsection

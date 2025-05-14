@@ -2,14 +2,20 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProfile;
+use App\Http\Controllers\AIChatController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AssignmentSubmissionController;
+use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\PayPalPaymentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentCourseController;
 use App\Http\Controllers\TeacherController;
 
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\TestPassController;
 use App\Models\Plan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -32,11 +38,26 @@ Route::get('/', function () {
 
 Route::get('lang/{lang}',[HomeController::class, 'switchLang'])->name('lang.switch');
 Auth::routes();
+Route::get('/gd-check', fn() => extension_loaded('gd') ? 'GD OK ✅' : 'NO GD ❌');
 
 //Auth Users
 Route::middleware(['auth', 'web'])->group(function () {
+    Route::get('/lessons/{lesson}/tests/create', [TestController::class, 'create'])->name('tests.create');
+    Route::post('/lessons/{lesson}/tests', [TestController::class, 'store'])->name('tests.store');
 
-    Route::get('/courses/{id}/grade', [CourseController::class, 'calculateFinalGradeForStudent'])->middleware('auth')->name('student.courses.final-grade');
+    Route::get('/tests/{test}/pass', [TestPassController::class, 'show'])->name('tests.pass');
+    Route::post('/tests/{test}/submit', [TestPassController::class, 'submit'])->name('tests.submit');
+    Route::get('/courses/{course}/progress', [StudentCourseController::class, 'progress'])->name('courses.progress');
+    Route::get('/courses/{course}/certificate', [CertificateController::class, 'download'])
+        ->middleware('auth')
+        ->name('courses.certificate');
+
+    Route::get('/paypal/pay/{course}', [PayPalPaymentController::class, 'process'])->name('paypal.pay');
+    Route::get('/paypal/success/{course}', [PayPalPaymentController::class, 'success'])->name('paypal.success');
+    Route::get('/paypal/cancel', [PayPalPaymentController::class, 'cancel'])->name('paypal.cancel');
+
+
+    Route::get('/courses/{id}/grade', [CourseController::class, 'calculateFinalGradeForStudentStudent'])->middleware('auth')->name('student.courses.final-grade');
     Route::post('/courses/{id}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
     Route::get('/my-courses', [CourseController::class, 'myCourses'])->name('student.courses.my');
     Route::get('/teacher/courses/{id}/students', [TeacherController::class, 'students'])->middleware(['auth'])->name('teacher.courses.students');
@@ -48,11 +69,6 @@ Route::middleware(['auth', 'web'])->group(function () {
         return response()->json(['price' => $usd]);
     });
 
-    Route::get('/subscription/success', [\App\Http\Controllers\SubscriptionController::class, 'confirmAfterPayPal'])->name('subscription.success');
-
-
-    Route::get('/subscription/plans', [\App\Http\Controllers\SubscriptionController::class, 'showPlans'])->name('subscription.plans');
-//    Route::post('/subscription/subscribe', [\App\Http\Controllers\SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
     Route::get('/student/courses/{id}', [CourseController::class, 'showForStudent'])->name('student.courses.show');
     Route::post('/logout', function () {
         Auth::logout();
@@ -75,6 +91,9 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 Route::middleware(['role:admin'])->group(function () {
+    Route::get('/support', [AIChatController::class, 'index'])->name('support.index');
+    Route::post('/support/ask', [AIChatController::class, 'ask'])->name('support.ask');
+
     Route::get('/logins', [AdminController::class, 'log'])->name('admin.logins.index');
 
     Route::get('admin/profile', [AdminProfile::class, 'edit'])->name('admin.profile');
@@ -87,8 +106,6 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/categories', [\App\Http\Controllers\AdminController::class, 'categories'])->name('admin.categories');
     Route::post('/categories', [\App\Http\Controllers\AdminController::class, 'storeCategory'])->name('admin.categories.store');
     Route::delete('/categories/{id}', [\App\Http\Controllers\AdminController::class, 'deleteCategory'])->name('admin.categories.delete');
-    Route::get('/admin/subscriptions', [\App\Http\Controllers\AdminController::class, 'subscriptions'])->name('admin.subscriptions');
-    Route::post('/admin/subscriptions/{id}/cancel', [\App\Http\Controllers\AdminController::class, 'cancelSubscription'])->name('admin.subscriptions.cancel');
     Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboards');
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::post('/courses/{id}/approve', [AdminController::class, 'approve'])->name('admin.courses.approve');

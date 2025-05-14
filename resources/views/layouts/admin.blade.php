@@ -67,11 +67,11 @@
                     <a class="collapse-item" href="{{ route('admin.admincourses') }}">{{ __('admin.layout.courses') }}</a>
                     <a class="collapse-item" href="{{ route('admin.adminlessons') }}">{{ __('admin.layout.lessons') }}</a>
 {{--                    <a class="collapse-item" href="{{ route('admin.dashboards') }}">Subs</a>--}}
-                    <a class="collapse-item" href="{{ route('admin.subscriptions') }}">{{ __('admin.layout.subs') }}</a>
                     <a class="collapse-item" href="{{ route('admin.categories') }}">{{ __('admin.layout.categories') }}</a>
                     <a class="collapse-item" href="{{ route('admin.activity') }}">{{ __('admin.layout.activity') }}</a>
                     <a class="collapse-item" href="{{ route('admin.settings') }}">{{ __('admin.layout.settings') }}</a>
                     <a class="collapse-item" href="{{ route('pending') }}">{{ __('admin.layout.courses_check') }}</a>
+{{--                    <a class="collapse-item" href="{{ route('support.index') }}">ss</a>--}}
                 </div>
             </div>
         </li>
@@ -142,9 +142,11 @@
 
         <!-- main -->
         <main class="flex-grow-1 p-4">
-            @include('components.breadcrumbs')
+{{--            @include('components.breadcrumbs')--}}
 
             @yield('content')
+
+            @yield('scripts')
         </main>
 
         <footer class="sticky-footer bg-white">
