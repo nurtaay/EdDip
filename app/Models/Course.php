@@ -38,4 +38,16 @@ class Course extends Model
         return $this->belongsToMany(User::class, 'course_user')->withPivot('is_completed')->withTimestamps();
     }
 
+    public function reviews()
+    {
+        return $this->hasMany(CourseReview::class);
+    }
+
+    public function purchases()
+    {
+        return $this->hasMany(CoursePurchase::class);
+    }
+
+
+
 }

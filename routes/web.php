@@ -7,6 +7,7 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AssignmentSubmissionController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\CourseReviewController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\PayPalPaymentController;
@@ -46,6 +47,10 @@ Route::middleware(['auth', 'web'])->group(function () {
         ->name('courses.complete');
     Route::get('/lessons/{lesson}/tests/create', [TestController::class, 'create'])->name('tests.create');
     Route::post('/lessons/{lesson}/tests', [TestController::class, 'store'])->name('tests.store');
+
+    Route::post('/courses/{course}/reviews', [CourseReviewController::class, 'store'])->name('reviews.store');
+    Route::delete('/reviews/{review}', [CourseReviewController::class, 'destroy'])->name('reviews.destroy');
+
 
     Route::get('/tests/{test}/pass', [TestPassController::class, 'show'])->name('tests.pass');
     Route::post('/tests/{test}/submit', [TestPassController::class, 'submit'])->name('tests.submit');
@@ -93,6 +98,8 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 Route::middleware(['role:admin'])->group(function () {
+    Route::get('/admin/sales-statistics', [\App\Http\Controllers\Admin\StatisticsController::class, 'sales'])->name('admin.statistics.sales');
+
     Route::get('/support', [AIChatController::class, 'index'])->name('support.index');
     Route::post('/support/ask', [AIChatController::class, 'ask'])->name('support.ask');
 

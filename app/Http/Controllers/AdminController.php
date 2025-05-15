@@ -280,10 +280,10 @@ class AdminController extends Controller{
 //            ->latest()
 //            ->get();
 //
-//        return view('admin.activity', compact(
-//            'courseRegistrations', 'submissions', 'payments',
-//            'filterType', 'courseId', 'startDate', 'endDate', 'courses'
-//        ));
+        return view('admin.activity', compact(
+            'courseRegistrations', 'submissions',
+            'filterType', 'courseId', 'startDate', 'endDate', 'courses'
+        ));
     }
 
     public function settings()

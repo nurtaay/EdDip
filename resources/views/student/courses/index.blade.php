@@ -205,6 +205,20 @@
                                             </a>
                                         </h5>
                                         <p class="description text-muted mb-3">{{ Str::limit($course->description, 100) }}</p>
+
+                                        @if($course->reviews->count())
+                                            <div class="text-warning small mb-2">
+                                                @php $avg = round($course->reviews->avg('rating'), 1); @endphp
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <span>{{ $i <= $avg ? '★' : '☆' }}</span>
+                                                @endfor
+                                                <span class="text-muted ms-1">({{ $avg }}/5)</span>
+                                            </div>
+                                        @else
+                                            <div class="text-muted small mb-2">Пока нет отзывов</div>
+                                        @endif
+
+
                                     </div>
                                 </div>
                             </div>
