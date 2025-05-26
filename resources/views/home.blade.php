@@ -24,11 +24,9 @@
 @section('about')
     @include('about')
 @endsection
-
 @section('us')
     @include('us')
 @endsection
-
 @section('card')
     @include('student.courses.index')
 @endsection
@@ -40,3 +38,4 @@
 @section('teacher')
     @include('teacher.courses.index')
 @endsection
+

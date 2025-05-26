@@ -235,4 +235,56 @@
         </div>
     </section>
 
+    @auth
+        <section class="container-fluid my-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card shadow-lg rounded-4 border-0">
+                        <div class="card-body p-4">
+                            <h2 class="h4 mb-4 text-center">{{ __('main.contact_us') }}</h2>
+
+                            @if(session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                            @endif
+
+                            <form action="{{ route('contact.store') }}" method="POST" novalidate>
+                                @csrf
+
+                                <div class="mb-3">
+                                    <input type="text" name="name" class="form-control rounded-3"
+                                           placeholder="{{ __('main.your_name') }}"
+                                           value="{{ old('name', auth()->user()->name) }}" required>
+                                </div>
+
+                                <div class="mb-3">
+                                    <input type="email" name="email" class="form-control rounded-3"
+                                           placeholder="{{ __('main.your_email') }}"
+                                           value="{{ old('email', auth()->user()->email) }}" required readonly>
+                                </div>
+
+                                <div class="mb-3">
+                                    <input type="text" name="subject" class="form-control rounded-3"
+                                           placeholder="{{ __('main.subject') }}"
+                                           value="{{ old('subject') }}" required>
+                                </div>
+
+                                <div class="mb-3">
+                            <textarea name="message" class="form-control rounded-3" rows="4"
+                                      placeholder="{{ __('main.your_message') }}" required>{{ old('message') }}</textarea>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100 py-2 rounded-3">
+                                    {{ __('main.send_message') }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endauth
+
+
 @endsection

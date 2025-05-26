@@ -72,6 +72,9 @@
                     <a class="collapse-item" href="{{ route('admin.settings') }}">{{ __('admin.layout.settings') }}</a>
                     <a class="collapse-item" href="{{ route('pending') }}">{{ __('admin.layout.courses_check') }}</a>
                     <a class="collapse-item" href="{{ route('admin.statistics.sales') }}">{{ __('admin.layout.buy') }}</a>
+                    <a class="collapse-item" href="{{ route('teacher-applications.index') }}">{{ __('admin.teacher-applications.index') }}</a>
+                    <a class="collapse-item" href="{{ route('contacts.index') }}">{{ __('admin.contacts') }}</a>
+
 {{--                    <a class="collapse-item" href="{{ route('support.index') }}">ss</a>--}}
                 </div>
             </div>

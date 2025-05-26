@@ -20,6 +20,10 @@
                     <a href="#" class="inline-block mt-4 text-blue-600 hover:underline font-medium">
                         {{ __('main.learn_more') }} →
                     </a>
+                    <p class="mt-3 text-muted">
+                        <a href="{{ route('teacher.form') }}">Хотите преподавать у нас? -></a>
+                    </p>
+
                 </div>
             </div>
         </div>

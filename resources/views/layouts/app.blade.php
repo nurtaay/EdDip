@@ -51,7 +51,7 @@
                 <li><a href="{{ route('home') }}" class="active">{{ __('main.home') }}<br></a></li>
 
                 <div class="dropdown">
-                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         🌐 {{ strtoupper(app()->getLocale()) }}
                     </button>
                     <ul class="dropdown-menu">
@@ -60,7 +60,55 @@
                     </ul>
                 </div>
 
+
                 @auth
+                    @php
+                        $unread = auth()->user()->unreadNotifications->take(2); // ← только 2 последних
+                    @endphp
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link position-relative" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            🔔
+                            @if(auth()->user()->unreadNotifications->count())
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ auth()->user()->unreadNotifications->count() }}
+                </span>
+                            @endif
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 250px; max-width: 320px;">
+                            <li class="dropdown-header small fw-bold">
+                                {{ __('main.notifications') }}
+                            </li>
+
+                            @forelse ($unread as $notification)
+                                <li class="px-2 py-1">
+                                    <a class="dropdown-item text-wrap text-break p-2 rounded small" href="{{ $notification->data['url'] ?? '#' }}" style="line-height: 1.25;">
+                                        <div class="fw-semibold mb-1">{{ $notification->data['title'] }}</div>
+                                        <div class="text-muted" style="font-size: 0.85rem;">
+                                            {{ \Illuminate\Support\Str::limit($notification->data['message'], 150) }}
+                                        </div>
+                                    </a>
+                                </li>
+                            @empty
+                                <li><span class="dropdown-item text-muted small">{{ __('main.no_notifications') }}</span></li>
+                            @endforelse
+
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-center small text-primary" href="{{ route('notifications.all') }}">
+                                    {{ __('main.view_all_notifications') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @endauth
+
+
+
+
+
+            @auth
                     <li class="dropdown">
                         <a href="#"><span>{{ auth()->user()->name }} | {{ auth()->user()->role }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
                         <ul>

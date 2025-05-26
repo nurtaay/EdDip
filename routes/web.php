@@ -1,18 +1,23 @@
 <?php
 
+use App\Http\Controllers\Admin\ContactMessageAdminController;
+use App\Http\Controllers\Admin\TeacherApplicationAdminController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProfile;
 use App\Http\Controllers\AIChatController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AssignmentSubmissionController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseReviewController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PayPalPaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StudentCourseController;
+use App\Http\Controllers\TeacherApplicationController;
 use App\Http\Controllers\TeacherController;
 
 use App\Http\Controllers\TestController;
@@ -43,6 +48,15 @@ Route::get('/gd-check', fn() => extension_loaded('gd') ? 'GD OK âœ…' : 'NO GD â
 
 //Auth Users
 Route::middleware(['auth', 'web'])->group(function () {
+    Route::get('/notifications/all', [NotificationController::class, 'index'])->name('notifications.all');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+
+    Route::post('/contact', [ContactMessageController::class, 'store'])->name('contact.store');
+    Route::get('/become-teacher', [TeacherApplicationController::class, 'form'])->name('teacher.form');
+    Route::post('/become-teacher', [TeacherApplicationController::class, 'store'])->name('teacher.apply');
+
+
     Route::post('/courses/{course}/complete', [CourseController::class, 'complete'])
         ->name('courses.complete');
     Route::get('/lessons/{lesson}/tests/create', [TestController::class, 'create'])->name('tests.create');
@@ -98,6 +112,15 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 Route::middleware(['role:admin'])->group(function () {
+
+    Route::get('/contacts', [ContactMessageAdminController::class, 'index'])->name('contacts.index');
+    Route::post('/contacts/{id}/reply', [ContactMessageController::class, 'reply'])->name('contacts.reply');
+
+
+    Route::get('/teacher-applications', [TeacherApplicationController::class, 'index'])->name('teacher-applications.index');
+    Route::post('/teacher-applications/{id}/accept', [TeacherApplicationController::class, 'accept'])->name('teacher-applications.accept');
+    Route::post('/teacher-applications/{id}/reject', [TeacherApplicationController::class, 'reject'])->name('teacher-applications.reject');
+
     Route::get('/admin/sales-statistics', [\App\Http\Controllers\Admin\StatisticsController::class, 'sales'])->name('admin.statistics.sales');
 
     Route::get('/support', [AIChatController::class, 'index'])->name('support.index');
