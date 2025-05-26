@@ -1,6 +1,6 @@
 @auth()
     <!-- Секция: О нас -->
-    <section id="about" class="about section bg-white py-5">
+    <section id="about" class="about section py-5">
         <div class="container">
             <div class="row gy-4 items-center">
                 <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">

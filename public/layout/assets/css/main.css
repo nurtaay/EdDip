@@ -12,65 +12,209 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Open Sans",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --heading-font: "Raleway",  sans-serif;
-  --nav-font: "Poppins",  sans-serif;
-}
+    /* Fonts */
+    --default-font: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --heading-font: "Raleway", sans-serif;
+    --nav-font: "Poppins", sans-serif;
 
-/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
-:root {
-    /* Основные цвета */
-    --background-color: #ffffff;         /* Едва заметный голубовато-серый фон */
-    --surface-color: #ffffff;            /* Карточки, формы, блоки */
-    --default-color: #3a3f45;            /* Основной текст */
-    --heading-color: #1f2937;            /* Заголовки */
-    --accent-color: #2563eb;             /* Акцент (синий, профессиональный) */
-    --contrast-color: #ffffff;           /* Белый текст на кнопках и фоне accent */
+    /* Default values (light theme) — дублируются на случай отсутствия data-theme */
+    --background-color: #ffffff;
+    --surface-color: #ffffff;
+    --default-color: #3a3f45;
+    --heading-color: #1f2937;
+    --accent-color: #2563eb;
+    --contrast-color: #ffffff;
 
-    /* Навигация */
     --nav-color: #111827;
     --nav-hover-color: #2563eb;
     --nav-mobile-background-color: #ffffff;
     --nav-dropdown-background-color: #ffffff;
     --nav-dropdown-color: #1f2937;
     --nav-dropdown-hover-color: #2563eb;
+
+    --font-size: 1rem;
+    --link-decoration: none;
 }
 
+/* Светлая тема */
+[data-theme="light"] {
+    --background-color: #ffffff;
+    --surface-color: #ffffff;
+    --default-color: #3a3f45;
+    --heading-color: #1f2937;
+    --accent-color: #2563eb;
+    --contrast-color: #ffffff;
 
-/* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
+    --nav-color: #111827;
+    --nav-hover-color: #2563eb;
+    --nav-mobile-background-color: #ffffff;
+    --nav-dropdown-background-color: #ffffff;
+    --nav-dropdown-color: #1f2937;
+    --nav-dropdown-hover-color: #2563eb;
 
-.light-background {
-  --background-color: #f9f9f9;
-  --surface-color: #ffffff;
+    --font-size: 1rem;
+    --link-decoration: none;
 }
 
-.dark-background {
-  --background-color: #060606;
-  --default-color: #ffffff;
-  --heading-color: #ffffff;
-  --surface-color: #252525;
-  --contrast-color: #ffffff;
+/* Тёмная тема */
+[data-theme="dark"] {
+    --background-color: #0f172a;
+    --surface-color: #0c0c28;
+    --default-color: #d2e10f;
+    --heading-color: #ffffff;
+    --accent-color: #60a5fa;
+    --contrast-color: #ffffff;
+
+    --nav-color: #e2e8f0;
+    --nav-hover-color: #60a5fa;
+    --nav-mobile-background-color: #1e293b;
+    --nav-dropdown-background-color: #1e293b;
+    --nav-dropdown-color: #e2e8f0;
+    --nav-dropdown-hover-color: #60a5fa;
+
+    --font-size: 1rem;
+    --link-decoration: none;
 }
 
-/* Smooth scroll */
-:root {
-  scroll-behavior: smooth;
-}
+/* Тема для слабовидящих */
+[data-theme="accessible"] {
+    --background-color: #000000;
+    --surface-color: #171616;
+    --default-color: #ffff00;
+    --heading-color: #ffffff;
+    --accent-color: #00ff00;
+    --contrast-color: #ffffff;
 
-/*--------------------------------------------------------------
-# General Styling & Shared Classes
---------------------------------------------------------------*/
+    --nav-color: #ffff00;
+    --nav-hover-color: #00ff00;
+    --nav-mobile-background-color: #000000;
+    --nav-dropdown-background-color: #000000;
+    --nav-dropdown-color: #ffff00;
+    --nav-dropdown-hover-color: #00ff00;
+
+    --font-size: 1.2rem;
+    --link-decoration: underline;
+}
 body {
-  color: var(--default-color);
-  background-color: var(--background-color);
-  font-family: var(--default-font);
+    color: var(--default-color);
+    background-color: var(--background-color);
+    font-family: var(--default-font);
+    font-size: var(--font-size);
 }
 
 a {
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: 0.3s;
+    color: var(--accent-color);
+    text-decoration: var(--link-decoration);
+    transition: 0.3s;
 }
+
+.theme-card {
+    background-color: var(--surface-color);
+    color: var(--default-color);
+}
+
+.theme-input {
+    background-color: var(--surface-color);
+    color: var(--default-color);
+    border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+}
+
+.theme-input::placeholder {
+    color: color-mix(in srgb, var(--default-color), transparent 50%);
+}
+/* Поверхность / фон блока */
+.theme-surface {
+    background-color: var(--surface-color) !important;
+    color: var(--default-color) !important;
+}
+
+/* Вторичный текст (вместо text-muted) */
+.text-theme-secondary {
+    color: color-mix(in srgb, var(--default-color), transparent 40%) !important;
+}
+
+/* Успешный цвет (вместо text-success) */
+.text-theme-success {
+    color: #10b981 !important; /* можно адаптировать под тему */
+}
+
+/* Кнопка в стиле outline */
+.theme-btn-outline {
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    transition: 0.3s;
+
+}
+
+.theme-btn-outline:hover {
+    background-color: color-mix(in srgb, var(--accent-color), transparent 85%);
+    color: var(--contrast-color);
+}
+
+/* Прогрессбар (дополнительно) */
+.progress-bar {
+    background-color: var(--accent-color);
+}
+
+.progress {
+    background-color: color-mix(in srgb, var(--default-color), transparent 85%);
+}
+
+/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+/*:root {*/
+/*    !* Основные цвета *!*/
+/*    --background-color: #ffffff;         !* Едва заметный голубовато-серый фон *!*/
+/*    --surface-color: #ffffff;            !* Карточки, формы, блоки *!*/
+/*    --default-color: #3a3f45;            !* Основной текст *!*/
+/*    --heading-color: #1f2937;            !* Заголовки *!*/
+/*    --accent-color: #2563eb;             !* Акцент (синий, профессиональный) *!*/
+/*    --contrast-color: #ffffff;           !* Белый текст на кнопках и фоне accent *!*/
+
+/*    !* Навигация *!*/
+/*    --nav-color: #111827;*/
+/*    --nav-hover-color: #2563eb;*/
+/*    --nav-mobile-background-color: #ffffff;*/
+/*    --nav-dropdown-background-color: #ffffff;*/
+/*    --nav-dropdown-color: #1f2937;*/
+/*    --nav-dropdown-hover-color: #2563eb;*/
+/*}*/
+
+
+/*!* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. *!*/
+
+/*.light-background {*/
+/*  --background-color: #f9f9f9;*/
+/*  --surface-color: #ffffff;*/
+/*}*/
+
+/*.dark-background {*/
+/*  --background-color: #060606;*/
+/*  --default-color: #ffffff;*/
+/*  --heading-color: #ffffff;*/
+/*  --surface-color: #252525;*/
+/*  --contrast-color: #ffffff;*/
+/*}*/
+
+/*!* Smooth scroll *!*/
+/*:root {*/
+/*  scroll-behavior: smooth;*/
+/*}*/
+
+/*!*--------------------------------------------------------------*/
+/*# General Styling & Shared Classes*/
+/*--------------------------------------------------------------*!*/
+/*body {*/
+/*  color: var(--default-color);*/
+/*  background-color: var(--background-color);*/
+/*  font-family: var(--default-font);*/
+/*}*/
+
+/*a {*/
+/*  color: var(--accent-color);*/
+/*  text-decoration: none;*/
+/*  transition: 0.3s;*/
+/*}*/
 
 a:hover {
   color: color-mix(in srgb, var(--accent-color), transparent 25%);
@@ -102,7 +246,7 @@ h6 {
 .php-email-form .sent-message {
   display: none;
   color: #ffffff;
-  background: #059652;
+  background: var(--background-color);
   text-align: center;
   padding: 15px;
   margin-bottom: 24px;

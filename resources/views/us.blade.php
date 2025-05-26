@@ -1,5 +1,5 @@
 <!-- Counts Section -->
-<section id="counts" class="section counts light-background">
+<section id="counts" class="section counts">
     <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="row gy-4">
 
@@ -29,12 +29,12 @@
 <!-- /Counts Section -->
 
 <!-- Why Us Section -->
-<section id="why-us" class="section py-5 bg-gradient-to-b from-white to-blue-50">
+<section id="why-us" class="section py-5">
     <div class="container">
         <div class="row gy-4">
 
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="bg-gradient-to-br from-blue-100 to-blue-200 text-gray-800 rounded-xl shadow-md p-4 h-100 d-flex flex-column justify-content-between">
+                <div class="from-blue-100 to-blue-200 text-gray-800 rounded-xl shadow-md p-4 h-100 d-flex flex-column justify-content-between">
                     <h3 class="text-xl font-semibold mb-3">{{ __('main.why_us_heading') }}</h3>
                     <p class="text-sm">
                         {{ __('main.why_us_desc') }}
@@ -49,21 +49,21 @@
                 <div class="row gy-4 w-100" data-aos="fade-up" data-aos-delay="200">
 
                     <div class="col-xl-4">
-                        <div class="rounded-xl shadow bg-white border-l-4 border-blue-400 p-4 text-center h-100 hover:shadow-md transition">
+                        <div class="rounded-xl shadow border-l-4 border-blue-400 p-4 text-center h-100 hover:shadow-md transition">
                             <h4 class="text-lg font-semibold text-blue-800 mb-2">{{ __('main.feature_1_title') }}</h4>
                             <p class="text-sm text-gray-700">{{ __('main.feature_1_desc') }}</p>
                         </div>
                     </div>
 
                     <div class="col-xl-4">
-                        <div class="rounded-xl shadow bg-white border-l-4 border-green-400 p-4 text-center h-100 hover:shadow-md transition">
+                        <div class="rounded-xl shadow border-l-4 border-green-400 p-4 text-center h-100 hover:shadow-md transition">
                             <h4 class="text-lg font-semibold text-green-800 mb-2">{{ __('main.feature_2_title') }}</h4>
                             <p class="text-sm text-gray-700">{{ __('main.feature_2_desc') }}</p>
                         </div>
                     </div>
 
                     <div class="col-xl-4">
-                        <div class="rounded-xl shadow bg-white border-l-4 border-purple-400 p-4 text-center h-100 hover:shadow-md transition">
+                        <div class="rounded-xl shadow border-l-4 border-purple-400 p-4 text-center h-100 hover:shadow-md transition">
                             <h4 class="text-lg font-semibold text-purple-800 mb-2">{{ __('main.feature_3_title') }}</h4>
                             <p class="text-sm text-gray-700">{{ __('main.feature_3_desc') }}</p>
                         </div>

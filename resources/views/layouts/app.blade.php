@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
+<!-- Скрипт для темы -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const select = document.getElementById('theme-select');
+        if (select) select.value = savedTheme;
+    });
+
+    function setTheme(theme) {
+        document.documentElement.setAttribute('data-theme', theme);
+        localStorage.setItem('theme', theme);
+    }
+</script>
 
 <head>
     <meta charset="utf-8">
@@ -50,20 +64,38 @@
             <ul>
                 <li><a href="{{ route('home') }}" class="active">{{ __('main.home') }}<br></a></li>
 
-                <div class="dropdown">
-                    <button class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        🌐 {{ strtoupper(app()->getLocale()) }}
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item {{ app()->getLocale() === 'ru' ? 'active' : '' }}" href="{{ route('lang.switch', 'ru') }}">🇷🇺 {{ __('main.russian') }}</a></li>
-                        <li><a class="dropdown-item {{ app()->getLocale() === 'kz' ? 'active' : '' }}" href="{{ route('lang.switch', 'kz') }}">🇰🇿 {{ __('main.kazakh') }}</a></li>
-                    </ul>
-                </div>
+                <li class="d-flex align-items-center gap-2">
+
+                    {{-- Язык --}}
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="font-size: 16px;">
+                            🌐 {{ strtoupper(app()->getLocale()) }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item {{ app()->getLocale() === 'ru' ? 'active' : '' }}" href="{{ route('lang.switch', 'ru') }}">🇷🇺 Русский</a></li>
+                            <li><a class="dropdown-item {{ app()->getLocale() === 'kz' ? 'active' : '' }}" href="{{ route('lang.switch', 'kz') }}">🇰🇿 Қазақша</a></li>
+                        </ul>
+                    </div>
+
+                    {{-- Тема --}}
+                    <div class="dropdown">
+                        <a class="nav-link dropdown-toggle px-2" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false" style="font-size: 16px;">
+                            🎨
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#" onclick="setTheme('light')">☀️ {{__('main.light_theme')}}</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setTheme('dark')"> 🌑 {{__('main.dark_theme')}}</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="setTheme('accessible')">👁️ {{__('main.accessible_theme')}}</a></li>
+                        </ul>
+                    </div>
+
+                </li>
+
 
 
                 @auth
                     @php
-                        $unread = auth()->user()->unreadNotifications->take(2); // ← только 2 последних
+                        $unread = auth()->user()->unreadNotifications->take(2);
                     @endphp
 
                     <li class="nav-item dropdown">
@@ -76,35 +108,40 @@
                             @endif
                         </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end shadow" style="min-width: 250px; max-width: 320px;">
-                            <li class="dropdown-header small fw-bold">
+                        <ul class="dropdown-menu dropdown-menu-end shadow theme-surface" style="min-width: 250px; max-width: 320px;">
+                            <li class="dropdown-header small fw-bold" style="color: var(--heading-color);">
                                 {{ __('main.notifications') }}
                             </li>
 
                             @forelse ($unread as $notification)
                                 <li class="px-2 py-1">
-                                    <a class="dropdown-item text-wrap text-break p-2 rounded small" href="{{ $notification->data['url'] ?? '#' }}" style="line-height: 1.25;">
+                                    <a class="dropdown-item text-wrap text-break p-2 rounded small"
+                                       href="{{ $notification->data['url'] ?? '#' }}"
+                                       style="line-height: 1.25; color: var(--default-color);">
                                         <div class="fw-semibold mb-1">{{ $notification->data['title'] }}</div>
-                                        <div class="text-muted" style="font-size: 0.85rem;">
+                                        <div class="text-theme-secondary" style="font-size: 0.85rem;">
                                             {{ \Illuminate\Support\Str::limit($notification->data['message'], 150) }}
                                         </div>
                                     </a>
                                 </li>
                             @empty
-                                <li><span class="dropdown-item text-muted small">{{ __('main.no_notifications') }}</span></li>
+                                <li>
+                    <span class="dropdown-item text-theme-secondary small">
+                        {{ __('main.no_notifications') }}
+                    </span>
+                                </li>
                             @endforelse
 
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item text-center small text-primary" href="{{ route('notifications.all') }}">
+                                <a class="dropdown-item text-center small" href="{{ route('notifications.all') }}"
+                                   style="color: var(--accent-color);">
                                     {{ __('main.view_all_notifications') }}
                                 </a>
                             </li>
                         </ul>
                     </li>
                 @endauth
-
-
 
 
 
@@ -143,6 +180,7 @@
                 @endauth
 
             </ul>
+
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
     </div>

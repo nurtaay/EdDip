@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('title', $course->title)
-
 @section('content')
     <!-- Заголовок курса -->
     <div class="page-title py-5 border-bottom" data-aos="fade">
@@ -9,7 +8,6 @@
             <div class="row d-flex justify-content-center text-center">
                 <div class="col-lg-8">
                     <h1 class="fw-bold">{{ $course->title }}</h1>
-{{--                    <p class="mb-0 text-muted">{{ Str::limit($course->description, 150) }}</p>--}}
                 </div>
             </div>
         </div>
@@ -25,7 +23,7 @@
 
     <!-- Кнопка перехода к студентам -->
     <div class="container mt-4 text-end">
-        <a href="{{ route('teacher.courses.students', $course->id) }}" class="btn btn-outline-secondary btn-sm">
+        <a href="{{ route('teacher.courses.students', $course->id) }}" class="theme-btn-outline btn-sm">
             {{ __('teacher.show.students_btn') }}
         </a>
     </div>
@@ -41,7 +39,7 @@
                 </div>
 
                 <div class="col-lg-4">
-                    <div class="bg-light p-3 rounded shadow-sm">
+                    <div class="theme-surface p-3 rounded shadow-sm">
                         <div class="mb-2 d-flex justify-content-between">
                             <span class="fw-medium">{{ __('teacher.show.teacher') }}</span>
                             <span>{{ $course->user->name ?? __('teacher.show.no_name') }}</span>
@@ -52,7 +50,7 @@
                         </div>
                         <div class="d-flex justify-content-between">
                             <span class="fw-medium">{{ __('teacher.show.price') }}</span>
-                            <span class="text-success fw-bold">{{ $course->price }} ₸</span>
+                            <span class="text-theme-success fw-bold">{{ $course->price }} ₸</span>
                         </div>
                     </div>
                 </div>
@@ -61,7 +59,7 @@
     </section>
 
     <!-- Уроки в табах -->
-    <section id="tabs" class="tabs section py-5 bg-light">
+    <section id="tabs" class="tabs section py-5 theme-surface">
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row">
                 <!-- Навигация -->
@@ -97,13 +95,13 @@
                                     {{-- Контент --}}
                                     <div class="{{ $lesson->video ? 'col-md-7' : 'col-12' }}">
                                         <h5 class="fw-bold">{{ $lesson->title }}</h5>
-                                        <p class="text-muted fst-italic mb-2">{{ Str::limit(strip_tags($lesson->content), 100) }}</p>
+                                        <p class="text-theme-secondary fst-italic mb-2">{{ Str::limit(strip_tags($lesson->content), 100) }}</p>
                                         <div class="lesson-content mb-3">
                                             {!! nl2br(e($lesson->content)) !!}
                                         </div>
 
                                         <a href="{{ route('tests.create', $lesson->id) }}"
-                                           class="btn btn-outline-primary btn-sm">
+                                           class="theme-btn-outline btn-sm">
                                             {{ __('teacher.show.add_assignment_btn') }}
                                         </a>
                                     </div>
