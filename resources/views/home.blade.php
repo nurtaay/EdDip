@@ -6,7 +6,7 @@
     <!-- Hero Section -->
     <section id="hero" class="hero section bg-gray-900 text-white py-20 relative">
 
-        <img src="{{ asset('layout/assets/img/hero-bg.jpg') }}" alt="{{ __('main.hero_alt') }}" class="absolute inset-0 w-full h-full object-cover opacity-30" data-aos="fade-in">
+        <img src="{{ asset('layout/assets/img/888.jpg') }}" alt="{{ __('main.hero_alt') }}" class="absolute inset-0 w-full h-full object-cover opacity-30" data-aos="fade-in">
 
         <div class="container position-relative z-10 text-center">
             <h2 class="text-4xl font-bold leading-tight mb-4" data-aos="fade-up" data-aos-delay="100">
