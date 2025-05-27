@@ -74,6 +74,7 @@
                     <a class="collapse-item" href="{{ route('admin.statistics.sales') }}">{{ __('admin.layout.buy') }}</a>
                     <a class="collapse-item" href="{{ route('teacher-applications.index') }}">{{ __('admin.teacher-applications.index') }}</a>
                     <a class="collapse-item" href="{{ route('contacts.index') }}">{{ __('admin.contacts') }}</a>
+                    <a class="collapse-item" href="{{ route('admin.bot.index') }}">{{ __('chat_bot.index') }}</a>
 
 {{--                    <a class="collapse-item" href="{{ route('support.index') }}">ss</a>--}}
                 </div>

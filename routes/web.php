@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BotQuestionController;
 use App\Http\Controllers\Admin\ContactMessageAdminController;
 use App\Http\Controllers\Admin\TeacherApplicationAdminController;
 use App\Http\Controllers\AdminController;
@@ -7,7 +8,9 @@ use App\Http\Controllers\AdminProfile;
 use App\Http\Controllers\AIChatController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AssignmentSubmissionController;
+use App\Http\Controllers\BotChatController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseReviewController;
@@ -45,6 +48,8 @@ Route::get('/', function () {
 Route::get('lang/{lang}',[HomeController::class, 'switchLang'])->name('lang.switch');
 Auth::routes();
 Route::get('/gd-check', fn() => extension_loaded('gd') ? 'GD OK ✅' : 'NO GD ❌');
+Route::post('/bot-chat/ask', [BotChatController::class, 'ask'])->name('bot.chat.ask');
+
 
 //Auth Users
 Route::middleware(['auth', 'web'])->group(function () {
@@ -112,6 +117,14 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 Route::middleware(['role:admin'])->group(function () {
+
+    Route::get('admin/bot/', [BotQuestionController::class, 'index'])->name('admin.bot.index');
+    Route::get('admin/bot/create', [BotQuestionController::class, 'create'])->name('admin.bot.create');
+    Route::post('admin/bot/', [BotQuestionController::class, 'store'])->name('admin.bot.store');
+    Route::get('admin/bot/{id}/edit', [BotQuestionController::class, 'edit'])->name('admin.bot.edit');
+    Route::put('admin/bot/{id}', [BotQuestionController::class, 'update'])->name('admin.bot.update');
+    Route::delete('admin/bot/{id}', [BotQuestionController::class, 'destroy'])->name('admin.bot.destroy');
+
 
     Route::get('/contacts', [ContactMessageAdminController::class, 'index'])->name('contacts.index');
     Route::post('/contacts/{id}/reply', [ContactMessageController::class, 'reply'])->name('contacts.reply');

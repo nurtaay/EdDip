@@ -229,6 +229,7 @@
             </div>
         @endif
     @endauth
+
 </main>
 <footer id="footer" class="footer position-relative bg-gray-100 pt-5 pb-4">
 
@@ -259,7 +260,10 @@
     </div>
 
 </footer>
+<div class="position-fixed bottom-0 start-0 m-4 z-9999" id="chat-wrapper" style="max-width: 360px; z-index: 9999;">
 
+    @include('components.bot-chat')
+</div>
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 @stack('scripts')
@@ -276,6 +280,7 @@
 
 <!-- Main JS File -->
 <script src="{{ asset('layout/assets/js/main.js') }}"></script>
+
 
 </body>
 
