@@ -49,6 +49,7 @@ Route::get('lang/{lang}',[HomeController::class, 'switchLang'])->name('lang.swit
 Auth::routes();
 Route::get('/gd-check', fn() => extension_loaded('gd') ? 'GD OK ✅' : 'NO GD ❌');
 Route::post('/bot-chat/ask', [BotChatController::class, 'ask'])->name('bot.chat.ask');
+Route::get('/teachers/{id}', [TeacherController::class, 'showStud'])->name('teacherss.show');
 
 
 //Auth Users

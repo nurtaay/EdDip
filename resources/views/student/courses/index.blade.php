@@ -1,5 +1,14 @@
 @section('card')
     <style>
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
         .filter-section form {
             background: var(--surface-color);
             border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
@@ -68,6 +77,9 @@
             object-fit: cover;
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .course-item {
@@ -123,6 +135,26 @@
         }
         .description {
             color: color-mix(in srgb, var(--default-color), transparent 40%);
+
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* ограничение в 3 строки */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .description {
+            color: color-mix(in srgb, var(--default-color), transparent 40%);
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 60px; /* или auto — если надо гибко */
+        }
+
+        a.text-decoration-none:hover .course-item {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
         }
 
     </style>
@@ -159,17 +191,17 @@
                     </div>
 
                     <div class="me-2 mb-2">
-                        <label for="sort_by" class="form-label">{{ __('main.sort_by') }}</label>
-                        <select name="sort_by" id="sort_by" class="form-select">
-                            <option value="">{{ __('main.choose_sort') }}</option>
-                            <option value="newest" {{ request('sort_by') == 'newest' ? 'selected' : '' }}>
-                                {{ __('main.newest') }}
-                            </option>
-                            <option value="oldest" {{ request('sort_by') == 'oldest' ? 'selected' : '' }}>
-                                {{ __('main.oldest') }}
-                            </option>
+                        <label for="cat_id" class="form-label">{{ __('main.category') }}</label>
+                        <select name="cat_id" id="cat_id" class="form-select">
+                            <option value="">{{ __('main.choose_category') }}</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->id }}" {{ request('cat_id') == $cat->id ? 'selected' : '' }}>
+                                    {{ $cat->name }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
+
 
                     <div class="mb-2 me-2">
                         <button type="submit" class="btn-apply">
@@ -189,41 +221,53 @@
             <div class="row">
                 @if($courses->count())
                     @foreach($courses as $course)
-                        <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-                            <div class="course-item w-100 d-flex flex-column">
-                                <img src="{{ asset('storage/' . $course->image) }}"
-                                     class="course-img"
-                                     alt="{{ __('main.course_image') }}">
+                        <div class="col-4">
+                            <a href="{{ route('student.courses.show', $course->id) }}" class="w-100 text-decoration-none text-dark">
+                                <div class="course-content p-4 d-flex flex-column justify-content-between flex-grow-1">
 
-                                <div class="course-content p-4 flex-grow-1 d-flex flex-column justify-content-between">
-                                    <div>
+
+                                <img src="{{ asset('storage/' . $course->image) }}" class="course-img" alt="{{ __('main.course_image') }}">
+
+                                    <div class="course-content p-4 flex-grow-1 d-flex flex-column justify-content-between">
+
+                                        {{-- Верх: категория и цена --}}
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <p class="category mb-0">{{ $course->category->name }}</p>
-                                            <p class="price mb-0">{{ $course->price }} ₸</p>
+                                            <p class="mb-0 text-muted small">{{ $course->category->name }}</p>
+                                            <p class="price mb-0 fw-bold">{{ $course->price }} ₸</p>
                                         </div>
-                                        <h5 class="mb-2">
-                                            <a href="{{ route('student.courses.show', $course->id) }}">
-                                                {{ $course->title }}
-                                            </a>
-                                        </h5>
-                                        <p class="description description mb-3">{{ Str::limit($course->description, 100) }}</p>
 
+                                        {{-- Заголовок --}}
+                                        <h5 class="fw-semibold mb-2">{{ $course->title }}</h5>
+
+                                        {{-- Описание --}}
+                                        <p class="description mb-2">{{ Str::limit($course->description, 80) }}</p>
+
+                                        {{-- Дополнительные данные --}}
+                                        <div class="mb-2">
+                                            @if($course->difficulty)
+                                                <span class="badge bg-light text-dark me-1">{{ ucfirst($course->difficulty) }}</span>
+                                            @endif
+
+                                            @if($course->duration)
+                                                <span class="badge bg-light text-dark">⏱ {{ $course->duration }}</span>
+                                            @endif
+                                        </div>
+
+                                        {{-- Рейтинг (если есть) --}}
                                         @if($course->reviews->count())
                                             <div class="text-warning small mb-2">
                                                 @php $avg = round($course->reviews->avg('rating'), 1); @endphp
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     <span>{{ $i <= $avg ? '★' : '☆' }}</span>
                                                 @endfor
-                                                <span class="description ms-1">({{ $avg }}/5)</span>
+                                                <span class="text-muted ms-1">({{ $avg }}/5)</span>
                                             </div>
-                                        @else
-                                            <div class="description small mb-2">Пока нет отзывов</div>
                                         @endif
 
 
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     @endforeach
                 @else
@@ -234,6 +278,7 @@
                     </div>
                 @endif
             </div>
+
         </div>
     </section>
 

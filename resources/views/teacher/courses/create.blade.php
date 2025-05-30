@@ -43,6 +43,54 @@
                 </select>
             </div>
 
+            <div class="mb-3">
+                <label class="form-label fw-medium">{{ __('teacher.create.difficulty') }}</label>
+                <select name="difficulty" class="form-select theme-input">
+                    <option value="" disabled selected>{{ __('teacher.create.difficulty_placeholder') }}</option>
+                    <option value="новичок">{{ __('teacher.create.level_beginner') }}</option>
+                    <option value="средний">{{ __('teacher.create.level_intermediate') }}</option>
+                    <option value="продвинутый">{{ __('teacher.create.level_advanced') }}</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-medium">{{ __('teacher.create.duration') }}</label>
+                <input type="text" name="duration" class="form-control theme-input"
+                       placeholder="{{ __('teacher.create.duration_placeholder') }}">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-medium">{{ __('teacher.create.requirements') }}</label>
+                <textarea name="requirements" class="form-control theme-input" rows="2"
+                          placeholder="{{ __('teacher.create.requirements_placeholder') }}"></textarea>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label fw-medium">{{ __('teacher.create.skills') }}</label>
+                <input type="text" name="skills" class="form-control theme-input"
+                       placeholder="Например: Python, Excel, Git">
+                <small class="text-theme-secondary">Перечислите навыки через запятую</small>
+
+            </div>
+            @if($skills->count())
+                <div class="mb-4">
+                    <label class="form-label fw-medium">{{ __('teacher.create.suggested_skills') }}</label>
+                    <div id="suggested-skills">
+                        @foreach($skills as $skill)
+                            <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill me-1 mb-2 suggested-skill">
+                                {{ $skill->name }}
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+
+            <div class="form-check form-switch mb-4">
+                <input class="form-check-input" type="checkbox" name="is_certified" id="is_certified" value="1">
+                <label class="form-check-label" for="is_certified">{{ __('teacher.create.is_certified') }}</label>
+            </div>
+
             <div class="mb-4">
                 <label class="form-label fw-medium">{{ __('teacher.create.image') }}</label>
                 <input type="file" name="image" class="form-control theme-input" accept="image/*">
@@ -56,4 +104,5 @@
             </div>
         </form>
     </div>
+
 @endsection

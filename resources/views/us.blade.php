@@ -39,9 +39,6 @@
                     <p class="text-sm">
                         {{ __('main.why_us_desc') }}
                     </p>
-                    <div class="text-center mt-auto">
-                        <a href="#" class="inline-block mt-4 text-blue-900 hover:underline font-medium">{{ __('main.learn_more') }} →</a>
-                    </div>
                 </div>
             </div>
 

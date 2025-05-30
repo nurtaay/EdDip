@@ -39,6 +39,7 @@
     <link href="{{ asset('layout/assets/vendor/aos/aos.css') }}" rel="stylesheet">
     <link href="{{ asset('layout/assets/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
     <link href="{{ asset('layout/assets/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Main CSS File -->
     <link href="{{ asset('layout/assets/css/main.css') }}" rel="stylesheet">
@@ -231,35 +232,53 @@
     @endauth
 
 </main>
-<footer id="footer" class="footer position-relative bg-gray-100 pt-5 pb-4">
+<footer id="footer" class="footer position-relative bg-gray-100 pt-5 pb-4 border-top">
 
     <div class="container footer-top">
         <div class="row gy-4">
-            <div class="col-lg-4 col-md-6 footer-about">
-                <a href="#" class="text-2xl font-semibold text-gray-800 mb-2 inline-block">
-                    {{ __('main.educenter') }}
-                </a>
-                <div class="footer-contact text-sm text-gray-700 pt-3 leading-relaxed">
-                    <p>{{ __('main.address_line1') }}</p>
-                    <p>{{ __('main.address_line2') }}</p>
-                    <p class="mt-3"><strong>{{ __('main.phone') }}:</strong> <span>+7 700 700 70 70</span></p>
-                    <p><strong>{{ __('main.email') }}:</strong>
-                    @if($text = \App\Models\Setting::get('support_email'))
-                        <div class="mb-0 py-1">
-                            {{ $text }}
-                        </div>
-                        @endif
-                        </p>
-                </div>
+
+            <!-- О платформе -->
+            <div class="col-lg-4 col-md-6">
+                <h5 class="fw-bold mb-3 text-uppercase text-gray-800">{{ __('main.about_us') }}</h5>
+                <p class="text-sm text-gray-700">
+                    {{ __('main.footer_about_text') }}
+                </p>
             </div>
+
+            <!-- Контакты -->
+            <div class="col-lg-4 col-md-6">
+                <h5 class="fw-bold mb-3 text-uppercase text-gray-800">{{ __('main.contacts') }}</h5>
+                <p class="mb-1 text-sm text-gray-700">{{ __('main.address_line1') }}</p>
+                <p class="mb-1 text-sm text-gray-700">{{ __('main.address_line2') }}</p>
+                <p class="mb-1 text-sm text-gray-700">
+                    <strong>{{ __('main.phone') }}:</strong> +7 700 700 70 70
+                </p>
+                <p class="mb-0 text-sm text-gray-700">
+                    <strong>{{ __('main.email') }}:</strong>
+                    {{ \App\Models\Setting::get('support_email') ?? 'support@example.com' }}
+                </p>
+            </div>
+
+            <!-- Работаем -->
+            <div class="col-lg-4 col-md-6">
+                <h5 class="fw-bold mb-3 text-uppercase text-gray-800">{{ __('main.working_hours') }}</h5>
+                <ul class="list-unstyled text-sm text-gray-700">
+                    <li>{{ __('main.monday_friday') }}: 09:00 – 18:00</li>
+                    <li>{{ __('main.saturday') }}: 10:00 – 15:00</li>
+                    <li>{{ __('main.sunday') }}: {{ __('main.closed') }}</li>
+                </ul>
+            </div>
+
         </div>
     </div>
 
-    <div class="container text-center mt-6 text-sm text-gray-500 border-t pt-4">
-        <p>© {{ date('Y') }} <strong class="font-semibold">{{ __('main.educenter') }}</strong>. {{ __('main.all_rights') }}</p>
+    <div class="container text-center mt-5 pt-4 border-top text-sm text-gray-500">
+        <p class="mb-1">© {{ date('Y') }} <strong class="font-semibold">{{ __('main.educenter') }}</strong>. {{ __('main.all_rights') }}</p>
+        <p class="text-xs">{{ __('main.footer_note') }}</p>
     </div>
 
 </footer>
+
 <div class="position-fixed bottom-0 start-0 m-4 z-9999" id="chat-wrapper" style="max-width: 360px; z-index: 9999;">
 
     @include('components.bot-chat')
@@ -267,9 +286,10 @@
 <!-- Scroll Top -->
 <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 @stack('scripts')
+
 <!-- Preloader -->
 <div id="preloader"></div>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Vendor JS Files -->
 <script src="{{ asset('layout/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('layout/assets/vendor/php-email-form/validate.js') }}"></script>

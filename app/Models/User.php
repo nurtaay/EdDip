@@ -23,6 +23,16 @@ class User extends Authenticatable
         'password',
         'role',
         'image',
+        'bio',
+        'experience_years',
+        'education',
+        'specialization',
+        'languages',
+        'certificates',
+        'linkedin_url',
+        'website_url',
+        'video_intro_url',
+
     ];
 
     /**

@@ -74,20 +74,12 @@ class CourseController extends Controller
     {
         $course = Course::where('id', $id)
             ->where('status', 'approved')
-            ->with(['lessons', 'category', 'students']) // добавим сюда
+            ->with(['lessons', 'category', 'students', 'skills', 'user']) // добавим skills и user
             ->firstOrFail();
 
         $isEnrolled = CoursePurchase::where('user_id', auth()->id())
             ->where('course_id', $course->id)
             ->exists();
-
-        // Если у пользователя нет подписки, показываем только превью-уроки
-//        if (!auth()->check() || !auth()->user()->hasActiveSubscription()) {
-//            // фильтруем только открытые уроки
-//            $course->lessons = $course->lessons->filter(function ($lesson) {
-//                return $lesson->is_preview;
-//            });
-//        }
 
         // ===== РАССЧИТЫВАЕМ ПРОГРЕСС =====
         $lessonsWithTests = $course->lessons->filter(fn($lesson) => $lesson->test);
@@ -103,9 +95,23 @@ class CourseController extends Controller
 
         $progress = $total > 0 ? round(($passed / $total) * 100) : 0;
 
+        // ===== РЕКОМЕНДАЦИИ =====
+        $skillIds = $course->skills->pluck('id');
 
-        return view('student.courses.show', compact('course', 'isEnrolled', 'progress'));
+        $recommendedCourses = \App\Models\Course::where('id', '!=', $course->id)
+            ->where('status', 'approved')
+            ->where(function ($query) use ($skillIds, $course) {
+                $query->whereHas('skills', fn($q) => $q->whereIn('skills.id', $skillIds))
+                    ->orWhere('cat_id', $course->cat_id)
+                    ->orWhere('teacher_id', $course->teacher_id);
+            })
+            ->with(['category'])
+            ->take(4)
+            ->get();
+
+        return view('student.courses.show', compact('course', 'isEnrolled', 'progress', 'recommendedCourses'));
     }
+
 
     public function enroll($id)
     {

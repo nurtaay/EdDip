@@ -6,11 +6,19 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
+    public function showStud($id)
+    {
+        $teacher = User::where('id', $id)->where('role', 'teacher')->firstOrFail();
+
+        return view('teacher.show', compact('teacher'));
+    }
+
     public function index()
     {
         return view('teacher.dashboard');
@@ -34,7 +42,8 @@ class TeacherController extends Controller
             return redirect()->route('teacher.courses')->with('error', __('alert.course_pending'));
         }
         $categories = Category::all();
-        return view('teacher.courses.create', compact('categories'));
+        $skills = \App\Models\Skill::inRandomOrder()->limit(10)->get(); // или любой отбор
+        return view('teacher.courses.create', compact('categories', 'skills'));
     }
 
     public function store(Request $request)
@@ -45,6 +54,11 @@ class TeacherController extends Controller
             'price' => 'required|numeric|min:0',
             'cat_id' => 'required|exists:categories,id',
             'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'difficulty' => 'nullable|string',
+            'duration' => 'nullable|string',
+            'requirements' => 'nullable|string',
+            'is_certified' => 'nullable|boolean',
+            'skills' => 'nullable|string', // теперь это строка
         ]);
 
         $imagePath = null;
@@ -52,7 +66,7 @@ class TeacherController extends Controller
             $imagePath = $request->file('image')->store('courses', 'public');
         }
 
-        Course::create([
+        $course = Course::create([
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
@@ -60,11 +74,29 @@ class TeacherController extends Controller
             'image' => $imagePath,
             'teacher_id' => Auth::id(),
             'status' => 'pending',
-
+            'difficulty' => $request->difficulty,
+            'duration' => $request->duration,
+            'requirements' => $request->requirements,
+            'is_certified' => $request->has('is_certified'),
         ]);
+
+        // Обработка скиллов через запятую
+        if (!empty($request->skills)) {
+            $skillNames = array_filter(array_map('trim', explode(',', $request->skills)));
+            $skillIds = [];
+
+            foreach ($skillNames as $name) {
+                $skill = \App\Models\Skill::firstOrCreate(['name' => $name]);
+                $skillIds[] = $skill->id;
+            }
+
+            $course->skills()->sync($skillIds);
+        }
 
         return redirect()->route('teacher.courses')->with('success', __('alert.course_created'));
     }
+
+
 
     //  Добавление урока
     public function addLesson($course_id)

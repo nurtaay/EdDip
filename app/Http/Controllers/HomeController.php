@@ -10,6 +10,7 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        $categories = Category::all();
 
         $coursesCount = Course::count();
         $studentsCount = User::where('role', 'user')->count();
@@ -33,21 +34,15 @@ class HomeController extends Controller
             $query->where('price', '<=', $request->input('max_price'));
         }
 
-        if ($request->filled('sort_by')) {
-            $sort = $request->input('sort_by');
-            if ($sort === 'newest') {
-                $query->orderBy('created_at', 'desc');
-            } elseif ($sort === 'oldest') {
-                $query->orderBy('created_at', 'asc');
-            }
-        } else {
-            // По умолчанию — новые
-            $query->orderBy('created_at', 'desc');
+        if ($request->filled('cat_id')) {
+            $query->where('cat_id', $request->input('cat_id'));
         }
+
 
         $courses = $query->get();
 
-        return view('home', compact('courses', 'coursesCount', 'studentsCount', 'teachersCount'));
+        return view('home', compact('courses', 'coursesCount', 'studentsCount', 'teachersCount', 'categories'));
+
     }
 
     public function switchLang(Request $request, $lang)

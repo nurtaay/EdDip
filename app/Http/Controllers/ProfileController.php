@@ -12,13 +12,6 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-//        $activeSub = $user->subscriptions()
-//            ->where('status', 'active')
-//            ->where('end_date', '>=', now())
-//            ->latest('end_date')
-//            ->first();
-
-//        $allSubs = $user->subscriptions()->latest()->get();
         return view('profile.show', compact('user'));
     }
 
@@ -36,6 +29,18 @@ class ProfileController extends Controller
             $path = $request->file('image')->store('profiles', 'public');
             $user->image = $path;
         }
+        if ($user->isTeacher()) {
+            $user->bio = $request->input('bio');
+            $user->experience_years = $request->input('experience_years');
+            $user->education = $request->input('education');
+            $user->specialization = $request->input('specialization');
+            $user->languages = $request->input('languages');
+            $user->certificates = $request->input('certificates');
+            $user->linkedin_url = $request->input('linkedin_url');
+            $user->website_url = $request->input('website_url');
+            $user->video_intro_url = $request->input('video_intro_url');
+        }
+
 
         if ($validated['name']) {
             $user->name = $validated['name'];

@@ -9,9 +9,26 @@ class Course extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'image', 'teacher_id', 'price', 'cat_id', 'status'];
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'teacher_id',
+        'price',
+        'cat_id',
+        'status',
+        'difficulty',       // уровень сложности
+        'duration',         // продолжительность
+        'is_certified',     // сертификат (true/false)
+        'requirements',     // предварительные знания
+    ];
 
 
+
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class);
+    }
 
     public function lessons()
     {
@@ -47,6 +64,12 @@ class Course extends Model
     {
         return $this->hasMany(CoursePurchase::class);
     }
+
+    public function teacher()
+    {
+        return $this->belongsTo(User::class, 'teacher_id');
+    }
+
 
 
 
