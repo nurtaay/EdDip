@@ -18,6 +18,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
 
 <body id="page-top">
+@php
+    // Получаем текущий маршрут или URL
+    $currentRoute = Route::currentRouteName();
+
+    // Проверяем, к какому разделу он относится
+    $isManagementOpen = Str::startsWith($currentRoute, 'admin.users') || Str::startsWith($currentRoute, 'admin.logins.index');
+    $isUtilitiesOpen = Str::startsWith($currentRoute, 'admin.admincourses') || Str::startsWith($currentRoute, 'admin.categories') || Str::startsWith($currentRoute, 'admin.activity') || Str::startsWith($currentRoute, 'admin.settings') || Str::startsWith($currentRoute, 'pending') || Str::startsWith($currentRoute, 'admin.statistics.sales') || Str::startsWith($currentRoute, 'teacher-applications.index') || Str::startsWith($currentRoute, 'contacts.index') || Str::startsWith($currentRoute, 'admin.bot.index');
+@endphp
 <div id="wrapper">
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
         <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
@@ -40,43 +48,37 @@
         <div class="sidebar-heading">
             {{ __('admin.layout.interface') }}
         </div>
-        <li class="nav-item active">
-            <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-               aria-controls="collapseTwo">
+        <!-- Управление -->
+        <li class="nav-item {{ $isManagementOpen ? 'active' : '' }}">
+            <a class="nav-link {{ $isManagementOpen ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="{{ $isManagementOpen ? 'true' : 'false' }}" aria-controls="collapseTwo">
                 <i class="fas fa-fw fa-cog"></i>
                 <span>{{ __('admin.layout.management') }}</span>
             </a>
-            <div id="collapseTwo" class="collapse show" aria-labelledby="headingTwo"
-                 data-parent="#accordionSidebar">
+            <div id="collapseTwo" class="collapse {{ $isManagementOpen ? 'show' : '' }}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item active" href="{{ route('admin.users') }}">{{ __('admin.layout.users') }}</a>
-                    <a class="collapse-item" href="{{ route('admin.logins.index') }}">{{ __('admin.layout.log') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'admin.users' ? 'active' : '' }}" href="{{ route('admin.users') }}">{{ __('admin.layout.users') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'admin.logins.index' ? 'active' : '' }}" href="{{ route('admin.logins.index') }}">{{ __('admin.layout.log') }}</a>
                 </div>
             </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-               aria-expanded="true" aria-controls="collapseUtilities">
+        <!-- Утилиты -->
+        <li class="nav-item {{ $isUtilitiesOpen ? 'active' : '' }}">
+            <a class="nav-link {{ $isUtilitiesOpen ? '' : 'collapsed' }}" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="{{ $isUtilitiesOpen ? 'true' : 'false' }}" aria-controls="collapseUtilities">
                 <i class="fas fa-fw fa-wrench"></i>
                 <span>{{ __('admin.layout.utilities') }}</span>
             </a>
-            <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                 data-parent="#accordionSidebar">
+            <div id="collapseUtilities" class="collapse {{ $isUtilitiesOpen ? 'show' : '' }}" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Custom Utilities:</h6>
-                    <a class="collapse-item" href="{{ route('admin.admincourses') }}">{{ __('admin.layout.courses') }}</a>
-                    <a class="collapse-item" href="{{ route('admin.adminlessons') }}">{{ __('admin.layout.lessons') }}</a>
-{{--                    <a class="collapse-item" href="{{ route('admin.dashboards') }}">Subs</a>--}}
-                    <a class="collapse-item" href="{{ route('admin.categories') }}">{{ __('admin.layout.categories') }}</a>
-                    <a class="collapse-item" href="{{ route('admin.activity') }}">{{ __('admin.layout.activity') }}</a>
-                    <a class="collapse-item" href="{{ route('admin.settings') }}">{{ __('admin.layout.settings') }}</a>
-                    <a class="collapse-item" href="{{ route('pending') }}">{{ __('admin.layout.courses_check') }}</a>
-                    <a class="collapse-item" href="{{ route('admin.statistics.sales') }}">{{ __('admin.layout.buy') }}</a>
-                    <a class="collapse-item" href="{{ route('teacher-applications.index') }}">{{ __('admin.teacher-applications.index') }}</a>
-                    <a class="collapse-item" href="{{ route('contacts.index') }}">{{ __('admin.contacts') }}</a>
-                    <a class="collapse-item" href="{{ route('admin.bot.index') }}">{{ __('chat_bot.index') }}</a>
-
-{{--                    <a class="collapse-item" href="{{ route('support.index') }}">ss</a>--}}
+                    <a class="collapse-item {{ $currentRoute == 'admin.admincourses' ? 'active' : '' }}" href="{{ route('admin.admincourses') }}">{{ __('admin.layout.courses') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'admin.categories' ? 'active' : '' }}" href="{{ route('admin.categories') }}">{{ __('admin.layout.categories') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'admin.activity' ? 'active' : '' }}" href="{{ route('admin.activity') }}">{{ __('admin.layout.activity') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'admin.settings' ? 'active' : '' }}" href="{{ route('admin.settings') }}">{{ __('admin.layout.settings') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'pending' ? 'active' : '' }}" href="{{ route('pending') }}">{{ __('admin.layout.courses_check') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'admin.statistics.sales' ? 'active' : '' }}" href="{{ route('admin.statistics.sales') }}">{{ __('admin.layout.buy') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'teacher-applications.index' ? 'active' : '' }}" href="{{ route('teacher-applications.index') }}">{{ __('admin.teacher-applications.index') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'contacts.index' ? 'active' : '' }}" href="{{ route('contacts.index') }}">{{ __('admin.contacts') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'admin.bot.index' ? 'active' : '' }}" href="{{ route('admin.bot.index') }}">{{ __('admin.bot') }}</a>
                 </div>
             </div>
         </li>

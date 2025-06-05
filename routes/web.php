@@ -118,6 +118,8 @@ Route::middleware(['auth', 'web'])->group(function () {
 
 
 Route::middleware(['role:admin'])->group(function () {
+    Route::get('/adminn/courses/{id}', [\App\Http\Controllers\AdminController::class, 'show'])->name('admin.courses.show2');
+
 
     Route::get('admin/bot/', [BotQuestionController::class, 'index'])->name('admin.bot.index');
     Route::get('admin/bot/create', [BotQuestionController::class, 'create'])->name('admin.bot.create');

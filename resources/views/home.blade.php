@@ -4,20 +4,56 @@
     {{--    <h1>{{ __('main.welcome_user', ['name' => auth()->user()->name]) }}</h1>--}}
     {{--    <p>{{ __('main.your_role') }}: {{ auth()->user()->role }}</p>--}}
     <!-- Hero Section -->
-    <section id="hero" class="hero section bg-gray-900 text-white py-20 relative">
+        <div class="py-5" style="background-color: var(--background-color); color: var(--default-color); width: 1100px; margin-left: 200px">
+            <div class="container">
+                <div class="row align-items-center">
+                    {{-- Левая часть --}}
+                    <div class="col-lg-6 text-center text-lg-start mb-4 mb-lg-0">
+                        <h1 class="display-5 fw-bold mb-3" style="color: var(--heading-color);">
+                            {{ __('main.intro_title') ?? 'Введение в программирование' }}
+                        </h1>
+                        <p class="lead mb-4">
+                            {{ __('main.intro_subtitle') ?? 'Бесплатный курс по выбору IT-направления. Попробуй профессии, пройди тест и выбери свой путь в IT.' }}
+                        </p>
+                    </div>
 
-        <img src="{{ asset('layout/assets/img/888.jpg') }}" alt="{{ __('main.hero_alt') }}" class="absolute inset-0 w-full h-full object-cover opacity-30" data-aos="fade-in">
+                    {{-- Правая часть — изображение --}}
+                    <div class="col-lg-6 text-center">
+                        <img src="{{ asset('layout/assets/img/111.png') }}"
+                             class="img-fluid rounded shadow" alt="Курс по программированию" style="max-height: 320px;">
+                    </div>
+                </div>
 
-        <div class="container position-relative z-10 text-center">
-            <h2 class="text-4xl font-bold leading-tight mb-4" data-aos="fade-up" data-aos-delay="100">
-                {{ __('main.learn_today') }}
-            </h2>
-            <p class="text-lg text-gray-200 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
-                {{ __('main.our_mission') }}
-            </p>
+                {{-- Карточки --}}
+                <div class="row text-center mt-5 g-4">
+                    @php
+                        $cards = [
+                            ['title' => '7 IT-профессий', 'text' => 'Поймешь, кто чем занимается в IT'],
+                            ['title' => 'Практика', 'text' => 'Попробуешь профессии на практике'],
+                            ['title' => 'Тест', 'text' => 'Узнаешь, что тебе подходит'],
+                            ['title' => 'Бесплатно', 'text' => 'Полный доступ без оплаты']
+                        ];
+                    @endphp
+
+                    @foreach([1, 2, 3, 4] as $i)
+                        <div class="col-6 col-lg-3">
+                            <div class="card h-100 shadow"
+                                 style="background-color: var(--surface-color); color: var(--default-color); border: none;">
+                                <div class="card-body">
+                                    <h5 class="card-title fw-bold" style="color: var(--heading-color);">
+                                        {{ __('main.card_'.$i.'_title') }}
+                                    </h5>
+                                    <p class="card-text small">{{ __('main.card_'.$i.'_text') }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
         </div>
 
-    </section>
+
     <!-- /Hero Section -->
 @endsection
 

@@ -55,9 +55,10 @@
                             @endif
                         </td>
                         <td class="text-center">
-{{--                            <a href="{{ route('admin.courses.show', $course->id) }}" class="btn btn-sm btn-outline-primary me-1">--}}
-{{--                                {{__('admin.edit')}}--}}
-{{--                            </a>--}}
+                            <a href="{{ route('admin.courses.show2', $course->id) }}" class="me-1">
+                                {{ __('admin.view') }}
+                            </a>
+
                             <form action="{{ route('admin.courses.destroy', $course->id) }}" method="POST" class="d-inline"
                                   onsubmit="return confirm('Удалить курс навсегда?');">
                                 @csrf

@@ -10,6 +10,8 @@ use App\Models\Setting;
 use App\Models\Subscription;
 use App\Models\User;
 use App\Models\UserLogin;
+use App\Notifications\TeacherApplicationApproved;
+use App\Notifications\TeacherApplicationRejected;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -139,27 +141,32 @@ class AdminController extends Controller{
 
     public function index2()
     {
-        $courses = Course::where('status', 'pending')->with('user')->get();
+        $courses = Course::whereIn('status', ['pending', 'approved', 'rejected'])->with('user')->latest()->get();
+
         $users = User::all();
         return view('admin.index', compact('users', 'courses'));
     }
 
     // Подтвердить курс
-    public function approve($id)
+    public function approve(Request $request, $id)
     {
-        $course = Course::findOrFail($id);
+        $course = Course::with('user')->findOrFail($id);
         $course->status = 'approved';
         $course->save();
+
+        // отправка уведомления
+        $course->user->notify(new TeacherApplicationApproved($course->title, $request->input('message')));
 
         return redirect()->back()->with('success', __('alert.course_approved'));
     }
 
-    // Отклонить курс
-    public function reject($id)
+    public function reject(Request $request, $id)
     {
-        $course = Course::findOrFail($id);
+        $course = Course::with('user')->findOrFail($id);
         $course->status = 'rejected';
         $course->save();
+
+        $course->user->notify(new TeacherApplicationRejected($course->title, $request->input('message')));
 
         return redirect()->back()->with('error', __('alert.course_rejected'));
     }
@@ -304,6 +311,12 @@ class AdminController extends Controller{
         Setting::set('banner_text', $request->banner_text);
 
         return back()->with('success', __('alert.settings_saved'));
+    }
+
+    public function show($id)
+    {
+        $course = \App\Models\Course::with(['user', 'lessons'])->findOrFail($id);
+        return view('admin.courses.show', compact('course'));
     }
 
 

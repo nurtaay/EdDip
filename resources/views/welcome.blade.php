@@ -16,7 +16,7 @@
                     {{ __('main.dashboard') }}
                 </a>
             @else
-                <a href="{{ route('login') }}" class="theme-btn-outline btn-lg" style="width: 80px; text-align: center">
+                <a href="{{ route('login') }}" class="btn btn-outline-primary btn-lg rounded-bottom" style="width: 110px;">
                     {{ __('main.login') }}
                 </a>
                 <a href="{{ route('register') }}" class="btn btn-primary btn-lg">

@@ -69,6 +69,10 @@ class Course extends Model
     {
         return $this->belongsTo(User::class, 'teacher_id');
     }
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class);
+    }
 
 
 

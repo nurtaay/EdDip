@@ -53,6 +53,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class, 'teacher_id');
+    }
 
     public function isTeacher()
     {
