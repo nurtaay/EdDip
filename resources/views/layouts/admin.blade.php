@@ -79,6 +79,14 @@
                     <a class="collapse-item {{ $currentRoute == 'teacher-applications.index' ? 'active' : '' }}" href="{{ route('teacher-applications.index') }}">{{ __('admin.teacher-applications.index') }}</a>
                     <a class="collapse-item {{ $currentRoute == 'contacts.index' ? 'active' : '' }}" href="{{ route('contacts.index') }}">{{ __('admin.contacts') }}</a>
                     <a class="collapse-item {{ $currentRoute == 'admin.bot.index' ? 'active' : '' }}" href="{{ route('admin.bot.index') }}">{{ __('admin.bot') }}</a>
+                    <a class="collapse-item {{ $currentRoute == 'admin.bot.index' ? 'active' : '' }}" href="{{ route('chat.index') }}">🗨️ Live Chat
+                        @if(!empty($unreadMessages))
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $unreadMessages }}
+                            </span>
+                        @endif
+                    </a>
+
                 </div>
             </div>
         </li>
@@ -189,9 +197,13 @@
         </div>
     </div>
 </div>
+
 <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
 <script src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
+@vite('resources/js/app.js')
+
+@stack('scripts')
 </body>
 </html>

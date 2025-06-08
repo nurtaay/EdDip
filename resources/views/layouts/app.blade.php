@@ -23,6 +23,7 @@
     </title>
     <meta name="description" content="">
     <meta name="keywords" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicons -->
     <link href="{{ asset('layout/assets/img/favicon.png') }}" rel="icon">
@@ -91,10 +92,22 @@
                     </div>
 
                 </li>
+                @auth()
+                    @if(auth()->user()->isTeacher())
+                <li class="nav-item">
+                    <a href="{{ route('chat.index') }}" class="nav-link position-relative">
+                        🗨️Chat
+                        @if(!empty($unreadMessages))
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ $unreadMessages }}
+                            </span>
+                        @endif
+                    </a>
+                </li>
+                    @endif
+                @endauth
 
-
-
-                @auth
+            @auth
                     @php
                         $unread = auth()->user()->unreadNotifications->take(2);
                     @endphp
@@ -291,6 +304,7 @@
 <div id="preloader"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- Vendor JS Files -->
+
 <script src="{{ asset('layout/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('layout/assets/vendor/php-email-form/validate.js') }}"></script>
 <script src="{{ asset('layout/assets/vendor/aos/aos.js') }}"></script>
@@ -301,7 +315,9 @@
 <!-- Main JS File -->
 <script src="{{ asset('layout/assets/js/main.js') }}"></script>
 
+@vite('resources/js/app.js')
 
+@stack('scripts') <!-- 🔥 Добавить обязательно! -->
 </body>
 
 </html>

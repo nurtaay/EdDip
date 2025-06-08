@@ -30,6 +30,8 @@ class Kernel extends HttpKernel
      */
     protected $middlewareGroups = [
         'web' => [
+            \App\Http\Middleware\TrackUserOnline::class,
+
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -69,8 +71,7 @@ class Kernel extends HttpKernel
         'only.subscribed' => \App\Http\Middleware\OnlySubscribed::class,
         'pro' => \App\Http\Middleware\CheckProAccess::class,
 //        'web' => [
-//            // ...
-//            \App\Http\Middleware\SetLocale::class,
+//            \App\Http\Middleware\TrackUserOnline::class,
 //        ],
     ];
 }

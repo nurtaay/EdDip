@@ -35,6 +35,14 @@
                 <textarea name="banner_text" class="form-control">{{ $settings['banner_text'] }}</textarea>
             </div>
 
+            <div class="mb-3">
+                <label class="form-label">Приветственное сообщение для новых преподавателей</label>
+                <textarea name="teacher_welcome_message" class="form-control" rows="6">{{ $settings['teacher_welcome_message'] ?? '' }}</textarea>
+                <div class="form-text">Вы можете вставить ссылки, HTML и инструкции. Это сообщение получит преподаватель при подтверждении.</div>
+            </div>
+
+
+
             <button class="btn btn-primary">{{ __('admin.settings.save') }}</button>
         </form>
     </div>

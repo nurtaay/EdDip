@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\MessageTController;
+use Illuminate\Support\Facades\Broadcast;
 use App\Http\Controllers\Admin\BotQuestionController;
 use App\Http\Controllers\Admin\ContactMessageAdminController;
 use App\Http\Controllers\Admin\TeacherApplicationAdminController;
@@ -10,7 +12,6 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\AssignmentSubmissionController;
 use App\Http\Controllers\BotChatController;
 use App\Http\Controllers\CertificateController;
-use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CourseReviewController;
@@ -54,6 +55,40 @@ Route::get('/teachers/{id}', [TeacherController::class, 'showStud'])->name('teac
 
 //Auth Users
 Route::middleware(['auth', 'web'])->group(function () {
+
+    Route::get('/test-cache', function () {
+        Cache::put('test', 'ok', 10);
+        return Cache::get('test'); // должен вернуть 'ok'
+    });
+    Route::get('/chat/fetch', [MessageTController::class, 'fetch']);
+
+    Route::get('/chat/online-status', function (\Illuminate\Http\Request $request) {
+        $id = $request->query('user_id');
+        $lastSeen = Cache::get('user-online-' . $id);
+        $online = $lastSeen && now()->diffInMinutes($lastSeen) < 2;
+        return response()->json([
+            'online' => $online,
+            'last_seen' => $lastSeen ? now()->diffInMinutes($lastSeen) : null
+        ]);
+    });
+
+    Route::get('/chat', [MessageTController::class, 'index'])->name('chat.index');
+    Route::post('/chat/send', [MessageTController::class, 'send']);
+    Route::get('/chat/{user}', [MessageTController::class, 'show'])->name('chat.with');
+    Route::post('/ping', function () {
+        if (Auth::check()) {
+            Cache::put('user-online-' . Auth::id(), now(), now()->addMinutes(2));
+        }
+        return response()->noContent();
+    })->middleware(['auth']);
+
+    Route::get('/terms', [AdminController::class, 'terms'])->name('pages.terms');
+    Route::get('/terms/pdf', [AdminController::class, 'termsPdf'])->name('terms.pdf');
+    Route::get('/offer/pdf', [AdminController::class, 'offerPdf'])->name('pages.offer');
+
+    Route::get('/offer', [AdminController::class, 'offer'])->name('pages.offer');
+
+
     Route::get('/notifications/all', [NotificationController::class, 'index'])->name('notifications.all');
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
@@ -154,6 +189,7 @@ Route::middleware(['role:admin'])->group(function () {
     Route::get('/categories', [\App\Http\Controllers\AdminController::class, 'categories'])->name('admin.categories');
     Route::post('/categories', [\App\Http\Controllers\AdminController::class, 'storeCategory'])->name('admin.categories.store');
     Route::delete('/categories/{id}', [\App\Http\Controllers\AdminController::class, 'deleteCategory'])->name('admin.categories.delete');
+    Route::delete('/categories/{id}', [\App\Http\Controllers\AdminController::class, 'deleteCategory'])->name('admin.categories.delete');
     Route::get('/admin/dashboard', [\App\Http\Controllers\AdminController::class, 'dashboard'])->name('admin.dashboards');
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::post('/courses/{id}/approve', [AdminController::class, 'approve'])->name('admin.courses.approve');
@@ -192,3 +228,4 @@ Route::middleware(['role:teacher'])->group(function () {
      Route::post('/teacher/lessons/{lesson_id}/task', [TeacherController::class, 'storeTask'])->name('teacher.task.store');
     });
 });
+

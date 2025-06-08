@@ -6,6 +6,7 @@ use App\Models\AssignmentSubmission;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\MessageT;
 use App\Models\Setting;
 use App\Models\Subscription;
 use App\Models\User;
@@ -15,8 +16,29 @@ use App\Notifications\TeacherApplicationRejected;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller{
+    public function termsPdf()
+    {
+        $pdf = Pdf::loadView('pages.terms');
+        return $pdf->download('terms.pdf');
+    }
+    public function offerPdf()
+    {
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pages.offer');
+        return $pdf->download('offer.pdf');
+    }
+    public function terms()
+    {
+        return view('pages.terms');
+    }
+
+    public function offer()
+    {
+        return view('pages.offer');
+    }
+
     public function log()
     {
         $logins = UserLogin::with('user')->orderBy('logged_in_at', 'desc')->paginate(20);
@@ -213,7 +235,21 @@ class AdminController extends Controller{
             'role' => 'required|in:admin,teacher,user',
         ]);
 
-        $user->update(['role' => $request->role]);
+        $oldRole = $user->role;
+        $user->role = $request->role;
+        $user->save();
+
+        // Если стал преподавателем и раньше им не был
+        if ($oldRole !== 'teacher' && $request->role === 'teacher') {
+            $welcomeMessage = Setting::get('teacher_welcome_message') ?? '🎉 Добро пожаловать в команду преподавателей!';
+
+            MessageT::create([
+                'sender_id' => auth()->id(), // админ
+                'receiver_id' => $user->id,  // новый преподаватель
+                'message' => $welcomeMessage,
+                'created_at' => now(),
+            ]);
+        }
 
         return redirect()->route('admin.users')->with('success', __('alert.user_updated'));
     }
@@ -299,16 +335,19 @@ class AdminController extends Controller{
             'site_name' => Setting::get('site_name', 'My Platform'),
             'support_email' => Setting::get('support_email', 'admin@example.com'),
             'banner_text' => Setting::get('banner_text'),
+            'teacher_welcome_message' => Setting::get('teacher_welcome_message', ''), // ← добавлено
         ];
 
         return view('admin.settings', compact('settings'));
     }
+
 
     public function updateSettings(Request $request)
     {
         Setting::set('site_name', $request->site_name);
         Setting::set('support_email', $request->support_email);
         Setting::set('banner_text', $request->banner_text);
+        Setting::set('teacher_welcome_message', $request->teacher_welcome_message);
 
         return back()->with('success', __('alert.settings_saved'));
     }
